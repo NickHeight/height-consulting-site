@@ -116,6 +116,8 @@
         }
         .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(42px,6vw,78px); font-weight: 500; line-height: 1.06; margin-bottom: 28px; letter-spacing: -0.01em; }
         .hero-title .char { display: inline-block; opacity: 0; transform: translateY(50px) rotateX(-20deg); }
+        .word { display: inline-block; white-space: nowrap; }
+        .char { display: inline-block; }
         .hero-title em { font-style: italic; color: var(--accent); }
         .hero-title .word-wrap { display: inline-block; overflow: hidden; }
         .hero-sub { font-size: 18px; color: var(--text-secondary); max-width: 600px; margin: 0 auto 48px; font-weight: 300; line-height: 1.8; opacity: 0; }
@@ -378,7 +380,130 @@
         .section-desc { font-size: 17px; color: var(--text-secondary); max-width: 560px; line-height: 1.8; font-weight: 300; }
 
         /* ═══ SERVICES ═══ */
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 80px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 80px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+        /* ═══ LIVE AUTOMATION FLOW ═══ */
+        .flow-section {
+            padding: 160px 60px; position: relative; overflow: hidden;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+        }
+        .flow-section::before {
+            content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 400px; border-radius: 50%; pointer-events: none;
+            background: radial-gradient(ellipse, rgba(37,99,235,0.08), transparent 70%); filter: blur(60px);
+        }
+        .flow-stage {
+            max-width: 1200px; margin: 80px auto 0; position: relative; z-index: 2;
+            background: rgba(15, 23, 41, 0.6); border: 1px solid var(--border);
+            border-radius: 4px; padding: 40px 32px; backdrop-filter: blur(12px);
+        }
+        .flow-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+            flex-wrap: wrap; gap: 16px;
+        }
+        .flow-header-left { display: flex; align-items: center; gap: 12px; }
+        .flow-live-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+            box-shadow: 0 0 12px rgba(34,197,94,0.7); animation: livePulse 2s ease-in-out infinite;
+        }
+        @keyframes livePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
+        .flow-header-title { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #22c55e; font-weight: 500; }
+        .flow-header-title strong { color: var(--text-primary); font-weight: 500; margin-left: 8px; }
+        .flow-counter { font-family: 'Inter', monospace; font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+        .flow-counter strong { color: var(--accent); font-weight: 500; margin-right: 4px; }
+        .flow-svg-wrap { width: 100%; position: relative; }
+        .flow-svg { width: 100%; height: auto; display: block; }
+        .flow-line { fill: none; stroke: rgba(201,168,76,0.4); stroke-width: 1.5; stroke-dasharray: 6 10; animation: flowDash 1.8s linear infinite; }
+        .flow-line-branch { stroke: rgba(37,99,235,0.5); }
+        @keyframes flowDash { to { stroke-dashoffset: -32; } }
+        .flow-node rect {
+            fill: var(--bg-card); stroke: rgba(148,163,184,0.15); stroke-width: 1;
+            transition: stroke 0.3s, filter 0.3s;
+        }
+        .flow-node.pulse rect { stroke: var(--accent); filter: drop-shadow(0 0 8px rgba(201,168,76,0.5)); }
+        .flow-node text {
+            fill: var(--text-primary); font-family: 'Inter', sans-serif;
+            font-size: 13px; font-weight: 500; text-anchor: middle;
+        }
+        .flow-node .flow-node-sub { fill: var(--text-secondary); font-size: 10px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
+        .flow-node-icon { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+        .flow-node.branch .flow-node-icon { stroke: var(--blue); }
+        .flow-event-log {
+            margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);
+            font-family: 'Inter', monospace; font-size: 12px; color: var(--text-secondary);
+            max-height: 100px; overflow: hidden; position: relative;
+        }
+        .flow-event-log::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(15,23,41,0.9));
+        }
+        .flow-event-row {
+            display: grid; grid-template-columns: 70px 1fr auto; gap: 16px;
+            padding: 4px 0; opacity: 0.9; font-variant-numeric: tabular-nums;
+        }
+        .flow-event-row:first-child { opacity: 1; color: var(--text-primary); }
+        .flow-event-time { color: var(--text-secondary); font-size: 11px; }
+        .flow-event-msg { color: var(--text-primary); font-size: 12px; }
+        .flow-event-status { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #22c55e; }
+        @media (max-width: 768px) {
+            .flow-section { padding: 120px 24px; }
+            .flow-stage { padding: 24px 16px; }
+            .flow-header { flex-direction: column; align-items: flex-start; }
+            .flow-svg { min-width: 600px; }
+            .flow-svg-wrap { overflow-x: auto; }
+        }
+
+        /* ═══ LIVE STATUS PILL ═══ */
+        .status-pill {
+            position: fixed; bottom: 28px; left: 28px; z-index: 200;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 18px; background: rgba(15,23,41,0.85);
+            border: 1px solid rgba(34,197,94,0.3); border-radius: 100px;
+            backdrop-filter: blur(20px); font-size: 12px; color: var(--text-secondary);
+            font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+            transform: translateY(100px); opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s, box-shadow 0.4s;
+            pointer-events: none;
+        }
+        .status-pill.visible { transform: translateY(0); opacity: 1; }
+        .status-pill.event-fire { box-shadow: 0 0 24px rgba(34,197,94,0.25); border-color: rgba(34,197,94,0.5); }
+        .status-pill-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+            box-shadow: 0 0 8px rgba(34,197,94,0.7); animation: livePulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        .status-pill strong { color: var(--text-primary); font-weight: 500; }
+        .status-pill .sep { margin: 0 6px; opacity: 0.4; }
+        @media (max-width: 640px) { .status-pill { bottom: 16px; left: 16px; font-size: 11px; padding: 8px 14px; } .status-pill .status-pill-extra { display: none; } }
+
+        /* ═══ HOW WE BUILD THIS ═══ */
+        .how-we-build { padding: 160px 60px; position: relative; background: var(--bg-primary); overflow: hidden; }
+        .how-we-build::before { content: ''; position: absolute; top: 10%; right: -200px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.05), transparent 70%); filter: blur(80px); }
+        .how-we-build::after { content: ''; position: absolute; bottom: 10%; left: -150px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(37,99,235,0.05), transparent 70%); filter: blur(80px); }
+        .build-intro { max-width: 720px; margin: 32px auto 0; font-size: 17px; color: var(--text-secondary); line-height: 1.8; font-weight: 300; text-align: center; }
+        .build-intro em { font-style: italic; color: var(--accent); }
+        .build-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 80px; max-width: 1200px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .build-step {
+            padding: 40px; background: var(--bg-card); border: 1px solid var(--border);
+            position: relative; transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+        }
+        .build-step:hover { border-color: rgba(201,168,76,0.3); box-shadow: 0 0 40px rgba(201,168,76,0.08); transform: translateY(-4px); }
+        .build-step-num { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--accent); letter-spacing: 0.3em; margin-bottom: 20px; font-weight: 500; }
+        .build-step-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; margin-bottom: 16px; color: var(--text-primary); line-height: 1.3; }
+        .build-step-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
+        .build-step-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+        .build-step-stack span {
+            font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 6px 12px; background: var(--accent-dim);
+            border: 1px solid rgba(201,168,76,0.18); color: var(--accent);
+            border-radius: 100px; font-weight: 500;
+        }
+        .build-cta-wrap { text-align: center; margin-top: 72px; position: relative; z-index: 2; }
+        @media (max-width: 768px) {
+            .how-we-build { padding: 120px 24px; }
+            .build-step { padding: 32px; }
+        }
         .service-card {
             background: var(--bg-card); border: 1px solid var(--border); padding: 52px 44px;
             position: relative; overflow: hidden;
@@ -513,6 +638,16 @@
 
 <div class="noise-overlay"></div>
 <div class="scroll-progress"></div>
+
+<!-- LIVE STATUS PILL -->
+<div class="status-pill" aria-live="polite">
+    <span class="status-pill-dot"></span>
+    <span><strong id="pill-systems">12</strong> systems live</span>
+    <span class="sep status-pill-extra">·</span>
+    <span class="status-pill-extra"><strong id="pill-events">0</strong> events today</span>
+    <span class="sep">·</span>
+    <span><span id="pill-time">3s</span> ago</span>
+</div>
 <div class="cursor-ring"></div>
 <div class="cursor-dot"></div>
 
@@ -521,6 +656,7 @@
     <a href="#" class="nav-logo">Height <span>Consulting</span></a>
     <ul class="nav-links">
         <li><a href="#services">Services</a></li>
+        <li><a href="#how-we-build">The Build</a></li>
         <li><a href="#approach">Approach</a></li>
         <li><a href="#results">Results</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -589,21 +725,21 @@
         </div>
         <div class="metrics-grid">
             <div class="metric-card gs-hidden" style="--fill-width:94%;">
-                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                <div class="metric-card-value">200+</div>
-                <div class="metric-card-label">B2B Clients Served</div>
+                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+                <div class="metric-card-value">40+</div>
+                <div class="metric-card-label">Automations Shipped</div>
                 <div class="metric-card-bar"><div class="metric-card-fill"></div></div>
             </div>
             <div class="metric-card gs-hidden" style="--fill-width:87%;">
-                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-                <div class="metric-card-value">340%</div>
-                <div class="metric-card-label">Avg. Lead Increase</div>
+                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="metric-card-value">15+ hrs</div>
+                <div class="metric-card-label">Saved Per Client, Per Week</div>
                 <div class="metric-card-bar"><div class="metric-card-fill"></div></div>
             </div>
             <div class="metric-card gs-hidden" style="--fill-width:92%;">
-                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
                 <div class="metric-card-value">24/7</div>
-                <div class="metric-card-label">AI Systems Running</div>
+                <div class="metric-card-label">AI Systems Running Live</div>
                 <div class="metric-card-bar"><div class="metric-card-fill"></div></div>
             </div>
         </div>
@@ -613,10 +749,10 @@
 <!-- STATS -->
 <div class="stats">
     <div class="stats-grid">
-        <div class="stat gs-hidden"><div class="stat-number" data-target="200">0</div><div class="stat-label">B2B Clients Served</div></div>
-        <div class="stat gs-hidden"><div class="stat-number" data-target="94">0</div><div class="stat-label">Client Retention Rate %</div></div>
-        <div class="stat gs-hidden"><div class="stat-number" data-target="3">0</div><div class="stat-label">Month Avg. ROI Timeline</div></div>
-        <div class="stat gs-hidden"><div class="stat-number">24/7</div><div class="stat-label">AI Systems Running</div></div>
+        <div class="stat gs-hidden"><div class="stat-number" data-target="40">0</div><div class="stat-label">Automations Shipped</div></div>
+        <div class="stat gs-hidden"><div class="stat-number" data-target="15">0</div><div class="stat-label">Hrs / Week Saved per Client</div></div>
+        <div class="stat gs-hidden"><div class="stat-number" data-target="12">0</div><div class="stat-label">Live Systems in Production</div></div>
+        <div class="stat gs-hidden"><div class="stat-number">24/7</div><div class="stat-label">Always On</div></div>
     </div>
 </div>
 
@@ -731,32 +867,176 @@
         <p class="section-desc gs-hidden">Each solution works independently. Together, they create an intelligent growth engine that learns, adapts, and scales with your business.</p>
         <div class="services-grid">
             <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-                <h3 class="service-title">LinkedIn Outreach</h3>
-                <p class="service-desc">AI-powered targeting identifies and engages your ideal prospects on LinkedIn. Personalized messaging at scale with conversion tracking that actually means something.</p>
-                <a href="#" class="service-link">Learn More <span>&rarr;</span></a>
+                <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+                <h3 class="service-title">Workflow Automation</h3>
+                <p class="service-desc">End-to-end business processes orchestrated in n8n and Make.com. Data flows across your CRM, tools, and custom logic without humans babysitting — built to handle edge cases, surface errors, and scale with you.</p>
+                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
             </div>
             <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-                <h3 class="service-title">Premium Websites</h3>
-                <p class="service-desc">High-converting websites built with cinematic design and strategic architecture. Every pixel serves a purpose. Every interaction builds trust.</p>
-                <a href="#" class="service-link">Learn More <span>&rarr;</span></a>
+                <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+                <h3 class="service-title">LinkedIn Outreach</h3>
+                <p class="service-desc">Sales Navigator plus enrichment plus multi-step sequences running in n8n. Reply detection hands conversations to AI for qualification — your reps only see meeting-ready prospects. Every touchpoint tracked and attributed.</p>
+                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
             </div>
             <div class="service-card gs-hidden">
                 <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                 <h3 class="service-title">AI Chatbots</h3>
-                <p class="service-desc">Intelligent conversational agents that qualify leads, answer questions, and book meetings while you sleep. Trained on your business, speaking your language.</p>
-                <a href="#" class="service-link">Learn More <span>&rarr;</span></a>
+                <p class="service-desc">Conversational agents trained on your business, embedded on your site or inside Slack, Teams, or Telegram. Qualify leads, answer FAQs, and book meetings 24/7. Retrieval-augmented so answers stay accurate as the business evolves.</p>
+                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
             </div>
             <div class="service-card gs-hidden">
                 <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                 <h3 class="service-title">Intelligent Phone Systems</h3>
-                <p class="service-desc">AI voice agents that handle inbound calls, qualify opportunities, and route conversations with the nuance of your best team member. Always on. Never off-script.</p>
-                <a href="#" class="service-link">Learn More <span>&rarr;</span></a>
+                <p class="service-desc">AI voice agents (Twilio plus LLM) that handle inbound calls, qualify opportunities, and route with the nuance of your best rep. Warm-transfer to a human when it matters. Transcript plus summary lands in your CRM automatically.</p>
+                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
+            </div>
+            <div class="service-card gs-hidden">
+                <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                <h3 class="service-title">Premium Websites</h3>
+                <p class="service-desc">Cinematic, conversion-focused sites built the way you see this one. AI-generated video backgrounds, GSAP animation layer, vanilla-JS performance. Deployed to Netlify or Vercel with auto-sync from GitHub. You're looking at one.</p>
+                <a href="#how-we-build" class="service-link">See the Build <span>&rarr;</span></a>
             </div>
         </div>
     </div>
 </section>
+
+<div class="section-divider"></div>
+
+<!-- LIVE AUTOMATION FLOW -->
+<section id="flow" class="flow-section">
+    <div class="section-inner" style="text-align: center;">
+        <div class="section-label gs-hidden">Live Automation</div>
+        <h2 class="section-title gs-hidden" style="max-width: 780px; margin: 0 auto;" data-split-reveal>What a running system <em>looks like</em></h2>
+        <p class="build-intro gs-hidden">This is one of our n8n workflows — an inbound lead hits a webhook, gets enriched, qualified by AI, and routed to the right tool. Watching it run makes the abstract tangible.</p>
+
+        <div class="flow-stage gs-hidden">
+            <div class="flow-header">
+                <div class="flow-header-left">
+                    <span class="flow-live-dot"></span>
+                    <span class="flow-header-title">RUNNING<strong>Inbound Lead Workflow</strong></span>
+                </div>
+                <div class="flow-counter">
+                    <strong id="flow-events-today">0</strong>events processed today
+                    <span class="sep">·</span>
+                    avg latency <strong id="flow-latency">142</strong>ms
+                </div>
+            </div>
+
+            <div class="flow-svg-wrap">
+                <svg class="flow-svg" viewBox="0 0 1160 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <!-- Connection lines -->
+                    <path class="flow-line" d="M 140 160 L 310 160" id="flow-path-1"/>
+                    <path class="flow-line" d="M 450 160 L 620 160" id="flow-path-2"/>
+                    <path class="flow-line flow-line-branch" d="M 760 160 Q 820 160 840 100 Q 860 40 1020 40" id="flow-path-3"/>
+                    <path class="flow-line flow-line-branch" d="M 760 160 L 1020 160" id="flow-path-4"/>
+                    <path class="flow-line flow-line-branch" d="M 760 160 Q 820 160 840 220 Q 860 280 1020 280" id="flow-path-5"/>
+
+                    <!-- Node 1: Webhook -->
+                    <g class="flow-node" data-node="webhook" transform="translate(20,110)">
+                        <rect x="0" y="0" width="120" height="100" rx="6"/>
+                        <g class="flow-node-icon" transform="translate(30,24)">
+                            <polyline points="9 18 15 12 9 6" fill="none"/>
+                            <rect x="0" y="0" width="24" height="24" rx="4" fill="none" stroke="none"/>
+                        </g>
+                        <text x="60" y="72" class="flow-node-sub">Step 01</text>
+                        <text x="60" y="90">Webhook</text>
+                    </g>
+
+                    <!-- Node 2: Enrich -->
+                    <g class="flow-node" data-node="enrich" transform="translate(310,110)">
+                        <rect x="0" y="0" width="140" height="100" rx="6"/>
+                        <g class="flow-node-icon" transform="translate(36,24)">
+                            <circle cx="14" cy="14" r="12" fill="none"/>
+                            <path d="M 14 6 L 14 22 M 6 14 L 22 14" fill="none"/>
+                        </g>
+                        <text x="70" y="72" class="flow-node-sub">Step 02</text>
+                        <text x="70" y="90">Enrich + Dedupe</text>
+                    </g>
+
+                    <!-- Node 3: AI Qualify -->
+                    <g class="flow-node" data-node="ai" transform="translate(620,110)">
+                        <rect x="0" y="0" width="140" height="100" rx="6"/>
+                        <g class="flow-node-icon" transform="translate(38,22)">
+                            <path d="M 12 2 L 15 9 L 22 10 L 17 15 L 18 22 L 12 19 L 6 22 L 7 15 L 2 10 L 9 9 Z" fill="none"/>
+                        </g>
+                        <text x="70" y="72" class="flow-node-sub">Step 03</text>
+                        <text x="70" y="90">AI Qualify</text>
+                    </g>
+
+                    <!-- Node 4a: Slack (top branch) -->
+                    <g class="flow-node branch" data-node="slack" transform="translate(1020,10)">
+                        <rect x="0" y="0" width="120" height="60" rx="6"/>
+                        <text x="60" y="26" class="flow-node-sub">HOT LEAD</text>
+                        <text x="60" y="44">Slack Alert</text>
+                    </g>
+
+                    <!-- Node 4b: CRM (middle branch) -->
+                    <g class="flow-node branch" data-node="crm" transform="translate(1020,130)">
+                        <rect x="0" y="0" width="120" height="60" rx="6"/>
+                        <text x="60" y="26" class="flow-node-sub">QUALIFIED</text>
+                        <text x="60" y="44">CRM Sync</text>
+                    </g>
+
+                    <!-- Node 4c: Email (bottom branch) -->
+                    <g class="flow-node branch" data-node="email" transform="translate(1020,250)">
+                        <rect x="0" y="0" width="120" height="60" rx="6"/>
+                        <text x="60" y="26" class="flow-node-sub">NURTURE</text>
+                        <text x="60" y="44">Email Sequence</text>
+                    </g>
+
+                    <!-- Moving token -->
+                    <circle id="flow-token" r="5" fill="#c9a84c" opacity="0" filter="drop-shadow(0 0 6px rgba(201,168,76,0.9))"/>
+                </svg>
+            </div>
+
+            <div class="flow-event-log" id="flow-event-log" aria-live="polite">
+                <!-- events injected by JS -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- HOW WE BUILD SITES LIKE THIS -->
+<section id="how-we-build" class="how-we-build">
+    <div class="section-inner" style="text-align: center;">
+        <div class="section-label gs-hidden">How We Build Sites Like This</div>
+        <h2 class="section-title gs-hidden" style="max-width: 760px; margin: 0 auto;" data-split-reveal>The stack behind <em>this</em> site</h2>
+        <p class="build-intro gs-hidden">You're looking at one. No WordPress, no page-builder, no stock footage. Here's the same four-step stack we use on every <em>Premium Websites</em> engagement.</p>
+        <div class="build-stack-grid">
+            <div class="build-step gs-hidden">
+                <div class="build-step-num">STEP 01</div>
+                <h4 class="build-step-title">AI-generated hero video</h4>
+                <p class="build-step-desc">Reference image generated with NanoBanana 2, then turned into a looping video in Seedance 2.0. First-frame = last-frame conditioning gives a seamless loop with no visible cut — no location shoot, no stock footage, no production budget.</p>
+                <div class="build-step-stack"><span>Kie.ai</span><span>Seedance 2.0</span><span>NanoBanana 2</span></div>
+            </div>
+            <div class="build-step gs-hidden">
+                <div class="build-step-num">STEP 02</div>
+                <h4 class="build-step-title">Cinematic animation layer</h4>
+                <p class="build-step-desc">GSAP and ScrollTrigger drive every reveal, transform, and scroll-scrub. Lenis handles smooth scroll. Canvas particles, noise overlay, and custom cursor add depth without weight. 60fps target, GPU-accelerated throughout.</p>
+                <div class="build-step-stack"><span>GSAP</span><span>ScrollTrigger</span><span>Lenis</span><span>Canvas</span></div>
+            </div>
+            <div class="build-step gs-hidden">
+                <div class="build-step-num">STEP 03</div>
+                <h4 class="build-step-title">Built in Claude Code</h4>
+                <p class="build-step-desc">Vanilla HTML, CSS, and JavaScript — no framework overhead, no runtime cost. Architected in plan mode with the frontend-design plugin, then iterated against reference screenshots until the feel was right. No CMS. No bloat.</p>
+                <div class="build-step-stack"><span>Claude Code</span><span>Vanilla JS</span><span>HTML + CSS</span></div>
+            </div>
+            <div class="build-step gs-hidden">
+                <div class="build-step-num">STEP 04</div>
+                <h4 class="build-step-title">Shipped to production</h4>
+                <p class="build-step-desc">GitHub to Netlify (or Vercel) auto-deploy. Push a change, and it's live globally in 30 to 60 seconds. Custom domain, global CDN, HTTPS, and zero ops from day one. Updates feel instant.</p>
+                <div class="build-step-stack"><span>GitHub</span><span>Netlify</span><span>Vercel</span></div>
+            </div>
+        </div>
+        <div class="build-cta-wrap gs-hidden">
+            <a href="#contact" class="btn-primary magnetic-btn">Build one for your brand</a>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
 
 <!-- VIDEO BG 2: Luxury Yacht -->
 <section class="video-bg-section">
@@ -779,19 +1059,19 @@
         <h2 class="section-title gs-hidden" style="max-width: 600px; margin: 0 auto 0;" data-split-reveal>What our partners have to say</h2>
         <div class="testimonials-wrapper">
             <div class="testimonial-card gs-hidden" data-testimonial="0">
-                <p class="testimonial-quote">Height Consulting transformed our outreach completely. Within six weeks, we were booking meetings with prospects we'd been trying to reach for months. The AI systems they built just keep getting smarter.</p>
-                <div class="testimonial-author">Sarah Mitchell</div>
-                <div class="testimonial-role">VP of Growth, Apex Financial Services</div>
+                <p class="testimonial-quote">Height rebuilt the ops stack we'd been duct-taping together for two years. The automations just run — we stopped thinking about the parts of the business we used to fight every day.</p>
+                <div class="testimonial-author">Founder</div>
+                <div class="testimonial-role">Short-term rental operator &middot; Gulf Coast</div>
             </div>
             <div class="testimonial-card gs-hidden" data-testimonial="1" style="display:none;">
-                <p class="testimonial-quote">The ROI was undeniable. Within 90 days, our qualified leads increased by 340% and our cost per acquisition dropped by half. Height doesn't just build tools, they build growth engines.</p>
-                <div class="testimonial-author">Marcus Chen</div>
-                <div class="testimonial-role">CEO, Meridian Logistics</div>
+                <p class="testimonial-quote">We had an AI agent live across three of our businesses in under a month. It answers the questions we used to spend hours on every week. The difference in our calendar has been the real proof.</p>
+                <div class="testimonial-author">Owner</div>
+                <div class="testimonial-role">Multi-location service business &middot; Houston, TX</div>
             </div>
             <div class="testimonial-card gs-hidden" data-testimonial="2" style="display:none;">
-                <p class="testimonial-quote">We replaced three separate tools with one Height system. Their AI chatbot handles 80% of our inbound qualification now. Our sales team only talks to people who are genuinely ready to buy.</p>
-                <div class="testimonial-author">Diana Reeves</div>
-                <div class="testimonial-role">Head of Sales, CloudBridge SaaS</div>
+                <p class="testimonial-quote">They understood the n8n side and the strategy side at the same time, which is rare. The workflow they shipped handles the things a person used to babysit — and it's more reliable than the person was.</p>
+                <div class="testimonial-author">Operations Lead</div>
+                <div class="testimonial-role">Residential property management firm</div>
             </div>
             <div class="testimonial-dots">
                 <button class="active" data-index="0"></button>
@@ -852,9 +1132,9 @@
 <footer>
     <div class="footer-inner">
         <div class="footer-col gs-hidden"><div class="footer-brand">Height <span>Consulting</span></div><p class="footer-desc">AI-powered B2B solutions that connect your business with decision-makers who matter. Founded in 2024.</p></div>
-        <div class="footer-col gs-hidden"><div class="footer-heading">Solutions</div><ul class="footer-links"><li><a href="#">LinkedIn Outreach</a></li><li><a href="#">Premium Websites</a></li><li><a href="#">AI Chatbots</a></li><li><a href="#">Phone Systems</a></li></ul></div>
-        <div class="footer-col gs-hidden"><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="#">About</a></li><li><a href="#">Results</a></li><li><a href="#">Contact</a></li></ul></div>
-        <div class="footer-col gs-hidden"><div class="footer-heading">Connect</div><ul class="footer-links"><li><a href="#">LinkedIn</a></li><li><a href="#">nick@heightconsultingfirm.com</a></li></ul></div>
+        <div class="footer-col gs-hidden"><div class="footer-heading">Solutions</div><ul class="footer-links"><li><a href="#services">Workflow Automation</a></li><li><a href="#services">LinkedIn Outreach</a></li><li><a href="#services">AI Chatbots</a></li><li><a href="#services">Intelligent Phone Systems</a></li><li><a href="#how-we-build">Premium Websites</a></li></ul></div>
+        <div class="footer-col gs-hidden"><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="#approach">Approach</a></li><li><a href="#results">Results</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        <div class="footer-col gs-hidden"><div class="footer-heading">Connect</div><ul class="footer-links"><li><a href="mailto:nick@heightconsultingfirm.com">nick@heightconsultingfirm.com</a></li></ul></div>
     </div>
     <div class="footer-bottom"><span>&copy; 2026 Height Consulting. All rights reserved.</span><span>Engineered with precision.</span></div>
 </footer>
@@ -865,16 +1145,25 @@
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// ═══════ TEXT SPLITTING (char-by-char) ═══════
+// ═══════ TEXT SPLITTING (word-aware: chars never break mid-word) ═══════
 function splitText(el) {
     const html = el.innerHTML;
-    // Preserve <em> and <br> tags
     let result = '';
     let inTag = false;
     let tagBuffer = '';
+    let wordBuffer = '';
+    const flushWord = () => {
+        if (!wordBuffer) return;
+        const chars = wordBuffer.split('').map(c => `<span class="char">${c}</span>`).join('');
+        result += `<span class="word">${chars}</span>`;
+        wordBuffer = '';
+    };
     for (let i = 0; i < html.length; i++) {
         const c = html[i];
-        if (c === '<') { inTag = true; tagBuffer = '<'; continue; }
+        if (c === '<') {
+            flushWord();
+            inTag = true; tagBuffer = '<'; continue;
+        }
         if (inTag) {
             tagBuffer += c;
             if (c === '>') {
@@ -885,11 +1174,13 @@ function splitText(el) {
             continue;
         }
         if (c === ' ') {
+            flushWord();
             result += ' ';
         } else {
-            result += `<span class="char">${c}</span>`;
+            wordBuffer += c;
         }
     }
+    flushWord();
     el.innerHTML = result;
     return el.querySelectorAll('.char');
 }
@@ -1246,6 +1537,165 @@ lenis.on('scroll', ({ scroll }) => {
     }
     lastY = scroll;
 });
+
+// ═══════ LIVE AUTOMATION FLOW ═══════
+(function initLiveFlow() {
+    const svg = document.querySelector('.flow-svg');
+    if (!svg) return;
+    const token = document.getElementById('flow-token');
+    const log = document.getElementById('flow-event-log');
+    const eventsEl = document.getElementById('flow-events-today');
+    const latencyEl = document.getElementById('flow-latency');
+    const pillSystems = document.getElementById('pill-systems');
+    const pillEvents = document.getElementById('pill-events');
+    const pillTime = document.getElementById('pill-time');
+    const statusPill = document.querySelector('.status-pill');
+
+    const nodePositions = {
+        webhook: { x: 80, y: 160 },
+        enrich: { x: 380, y: 160 },
+        ai: { x: 690, y: 160 },
+        slack: { x: 1080, y: 40 },
+        crm: { x: 1080, y: 160 },
+        email: { x: 1080, y: 280 }
+    };
+
+    const BRANCHES = ['slack', 'crm', 'email'];
+    const BRANCH_LABELS = {
+        slack: { pill: 'HOT LEAD', msg: 'Qualified hot lead → Slack #sales-alerts' },
+        crm: { pill: 'QUALIFIED', msg: 'Mid-tier lead → HubSpot CRM synced' },
+        email: { pill: 'NURTURE', msg: 'Low-intent → nurture sequence enrolled' }
+    };
+    const SOURCES = ['LinkedIn Ad', 'Website Form', 'Webinar Reg', 'Referral', 'Case Study DL', 'Demo Request'];
+
+    let eventsToday = 2483 + Math.floor(Math.random() * 400);
+    let lastEventSeconds = 0;
+    let flowBusy = false;
+    let pillPaused = false;
+
+    function renderEvents() { eventsEl.textContent = eventsToday.toLocaleString(); pillEvents.textContent = eventsToday.toLocaleString(); }
+    renderEvents();
+
+    function renderLatency() { latencyEl.textContent = (120 + Math.floor(Math.random() * 90)); }
+
+    // Show pill after 2s
+    setTimeout(() => statusPill.classList.add('visible'), 2000);
+
+    // Tick: update "last event" seconds
+    setInterval(() => {
+        if (pillPaused) return;
+        lastEventSeconds += 1;
+        const t = lastEventSeconds < 60 ? lastEventSeconds + 's' : Math.floor(lastEventSeconds / 60) + 'm';
+        pillTime.textContent = t;
+    }, 1000);
+
+    // Flow token animation: webhook → enrich → ai → branch
+    function runFlow() {
+        if (flowBusy) return;
+        flowBusy = true;
+        const branch = BRANCHES[Math.floor(Math.random() * BRANCHES.length)];
+        const source = SOURCES[Math.floor(Math.random() * SOURCES.length)];
+        const path = ['webhook', 'enrich', 'ai', branch];
+
+        gsap.set(token, { opacity: 0, attr: { cx: nodePositions.webhook.x, cy: nodePositions.webhook.y } });
+        gsap.to(token, { opacity: 1, duration: 0.25 });
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                gsap.to(token, { opacity: 0, duration: 0.3 });
+                flowBusy = false;
+
+                // Pulse endpoint, fire status event
+                pulseNode(branch);
+                eventsToday += 1;
+                renderEvents();
+                renderLatency();
+                lastEventSeconds = 0;
+                pillTime.textContent = '0s';
+                statusPill.classList.add('event-fire');
+                setTimeout(() => statusPill.classList.remove('event-fire'), 500);
+
+                // Log entry
+                addLogEntry(source, branch);
+            }
+        });
+
+        for (let i = 1; i < path.length; i++) {
+            const from = nodePositions[path[i - 1]];
+            const to = nodePositions[path[i]];
+            const isBranch = i === path.length - 1;
+            tl.to(token, {
+                attr: { cx: to.x, cy: to.y },
+                duration: isBranch ? 0.9 : 0.7,
+                ease: 'power1.inOut',
+                onStart: () => pulseNode(path[i - 1]),
+                onComplete: () => { if (isBranch) pulseNode(path[i]); }
+            });
+        }
+    }
+
+    function pulseNode(name) {
+        const node = document.querySelector(`.flow-node[data-node="${name}"]`);
+        if (!node) return;
+        node.classList.add('pulse');
+        setTimeout(() => node.classList.remove('pulse'), 650);
+    }
+
+    function addLogEntry(source, branch) {
+        const time = new Date().toLocaleTimeString([], { hour12: false });
+        const label = BRANCH_LABELS[branch];
+        const row = document.createElement('div');
+        row.className = 'flow-event-row';
+        row.innerHTML = `
+            <span class="flow-event-time">${time}</span>
+            <span class="flow-event-msg">${source} → ${label.msg}</span>
+            <span class="flow-event-status">✓ ${label.pill}</span>
+        `;
+        log.insertBefore(row, log.firstChild);
+        // Keep max 5 visible
+        while (log.children.length > 5) log.removeChild(log.lastChild);
+    }
+
+    // Kick off once section is visible
+    let started = false;
+    const flowSection = document.querySelector('.flow-section');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !started) {
+                started = true;
+                // Seed a couple of log entries so it doesn't start empty
+                addLogEntry('Demo Request', 'crm');
+                addLogEntry('Referral', 'slack');
+                setTimeout(runFlow, 400);
+                // Re-trigger every 3.5-5.5s
+                setInterval(() => runFlow(), 4500 + Math.random() * 1500);
+            }
+        });
+    }, { threshold: 0.2 });
+    io.observe(flowSection);
+})();
+
+// ═══════ 3D TILT ON BUILD-STEP CARDS ═══════
+(function init3DTilt() {
+    const cards = document.querySelectorAll('.build-step');
+    if (!cards.length) return;
+    cards.forEach(card => {
+        card.style.transformStyle = 'preserve-3d';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s';
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transition = 'transform 0.12s linear, border-color 0.4s, box-shadow 0.4s';
+            card.style.transform = `perspective(1100px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-6px) scale(1.01)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s';
+            card.style.transform = '';
+        });
+    });
+})();
 </script>
 </body>
 </html>
