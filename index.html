@@ -11,6 +11,7 @@
     <meta property="og:url" content="https://heightconsultingfirm.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="video" href="hero-automation.mp4" type="video/mp4">
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -706,6 +707,12 @@
             * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
             .reveal { opacity: 1; transform: none; }
         }
+
+        /* ═══ PERF: skip painting off-screen sections until close to viewport ═══ */
+        .capabilities, .flow, .process, .atmos, .results, .quote-section, .cta, footer {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 900px;
+        }
     </style>
 </head>
 <body>
@@ -739,7 +746,7 @@
 <!-- ═══ HERO ═══ -->
 <section class="hero">
     <div class="hero-video">
-        <video autoplay muted loop playsinline preload="auto" poster="">
+        <video autoplay muted loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback>
             <source src="hero-automation.mp4" type="video/mp4">
         </video>
     </div>
@@ -947,7 +954,7 @@
 
 <!-- ═══ ATMOSPHERIC BREAK ═══ -->
 <section class="atmos">
-    <div class="atmos-bg"><video autoplay muted loop playsinline preload="auto"><source src="atmos-systems.mp4" type="video/mp4"></video></div>
+    <div class="atmos-bg"><video autoplay muted loop playsinline preload="none" data-lazysrc="atmos-systems.mp4"></video></div>
     <div class="atmos-overlay"></div>
     <div class="atmos-content">
         <div class="eyebrow atmos-eyebrow">The compounding effect</div>
@@ -1066,21 +1073,21 @@
     const pct = document.getElementById('preloader-pct');
     let p = 0;
     const tick = setInterval(() => {
-        p = Math.min(100, p + Math.random() * 14 + 6);
+        p = Math.min(100, p + Math.random() * 22 + 14);
         if (bar) bar.style.width = p + '%';
         if (pct) pct.textContent = Math.floor(p) + '%';
         if (p >= 100) {
             clearInterval(tick);
             setTimeout(() => {
                 if (preloader) {
-                    preloader.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                    preloader.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     preloader.style.opacity = '0';
-                    preloader.style.transform = 'translateY(-10px)';
-                    setTimeout(() => { preloader.remove(); animateHero(); }, 700);
+                    preloader.style.transform = 'translateY(-6px)';
+                    setTimeout(() => { preloader.remove(); animateHero(); }, 500);
                 }
-            }, 200);
+            }, 80);
         }
-    }, 90);
+    }, 55);
 
     // Animate preloader mark in
     setTimeout(() => {
@@ -1178,54 +1185,100 @@
         });
     });
 
-    // ═══ PARTICLE FIELD ═══
+    // ═══ PARTICLE FIELD (perf-tuned: cap DPR, throttle frames, skip on mobile) ═══
     (function () {
         const canvas = document.getElementById('particle-canvas');
         if (!canvas || prefersReducedMotion) return;
-        const ctx = canvas.getContext('2d');
-        let w, h, particles;
+        if (window.innerWidth < 768) { canvas.style.display = 'none'; return; }
+        const ctx = canvas.getContext('2d', { alpha: true });
+        const DPR = Math.min(devicePixelRatio || 1, 1.5);
+        const TARGET_FPS = 30, FRAME_MS = 1000 / TARGET_FPS;
+        const LINK_DIST = 110, LINK_DIST_SQ = LINK_DIST * LINK_DIST;
+        let particles = [], running = true, lastFrame = 0;
+
         function resize() {
-            w = canvas.width = canvas.offsetWidth * devicePixelRatio;
-            h = canvas.height = canvas.offsetHeight * devicePixelRatio;
-            ctx.scale(devicePixelRatio, devicePixelRatio);
-            const count = Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 18000);
+            canvas.width = canvas.offsetWidth * DPR;
+            canvas.height = canvas.offsetHeight * DPR;
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            const area = canvas.offsetWidth * canvas.offsetHeight;
+            const count = Math.min(60, Math.floor(area / 28000));
             particles = Array.from({ length: count }, () => ({
                 x: Math.random() * canvas.offsetWidth,
                 y: Math.random() * canvas.offsetHeight,
-                vx: (Math.random() - 0.5) * 0.25,
-                vy: (Math.random() - 0.5) * 0.25,
-                r: Math.random() * 1.4 + 0.4,
-                a: Math.random() * 0.4 + 0.15
+                vx: (Math.random() - 0.5) * 0.22,
+                vy: (Math.random() - 0.5) * 0.22,
+                r: Math.random() * 1.3 + 0.4,
+                a: Math.random() * 0.35 + 0.15
             }));
         }
-        function frame() {
-            ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-            // Links
+        function frame(ts) {
+            if (!running) return;
+            if (ts - lastFrame < FRAME_MS) { requestAnimationFrame(frame); return; }
+            lastFrame = ts;
+            const W = canvas.offsetWidth, H = canvas.offsetHeight;
+            ctx.clearRect(0, 0, W, H);
+            // Update positions
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > W) p.vx *= -1;
+                if (p.y < 0 || p.y > H) p.vy *= -1;
+            }
+            // Links (squared distance — skip sqrt)
+            ctx.lineWidth = 0.6;
             for (let i = 0; i < particles.length; i++) {
                 const p1 = particles[i];
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dx = p1.x - p2.x, dy = p1.y - p2.y;
-                    const d = Math.sqrt(dx * dx + dy * dy);
-                    if (d < 120) {
-                        ctx.strokeStyle = `rgba(201, 162, 71, ${0.12 * (1 - d / 120)})`;
-                        ctx.lineWidth = 0.6;
+                    const d2 = dx * dx + dy * dy;
+                    if (d2 < LINK_DIST_SQ) {
+                        const t = 1 - Math.sqrt(d2) / LINK_DIST;
+                        ctx.strokeStyle = `rgba(201, 162, 71, ${0.10 * t})`;
                         ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
                 }
             }
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.offsetWidth) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.offsetHeight) p.vy *= -1;
+            // Dots
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
                 ctx.fillStyle = `rgba(201, 162, 71, ${p.a})`;
                 ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-            });
+            }
             requestAnimationFrame(frame);
         }
-        window.addEventListener('resize', resize);
+        // Pause when hero scrolls off-screen
+        if ('IntersectionObserver' in window) {
+            const heroIO = new IntersectionObserver(es => {
+                running = es[0].isIntersecting;
+                if (running) requestAnimationFrame(frame);
+            });
+            heroIO.observe(canvas);
+        }
+        let resizeT;
+        window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(resize, 150); });
         resize();
-        frame();
+        requestAnimationFrame(frame);
+    })();
+
+    // ═══ LAZY-LOAD ATMOSPHERIC VIDEO ═══
+    (function () {
+        const lazyVids = document.querySelectorAll('video[data-lazysrc]');
+        if (!lazyVids.length || !('IntersectionObserver' in window)) {
+            lazyVids.forEach(v => { v.src = v.dataset.lazysrc; v.removeAttribute('data-lazysrc'); v.load(); });
+            return;
+        }
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting && e.target.dataset.lazysrc) {
+                    e.target.src = e.target.dataset.lazysrc;
+                    e.target.removeAttribute('data-lazysrc');
+                    e.target.load();
+                    io.unobserve(e.target);
+                }
+            });
+        }, { rootMargin: '600px 0px' });
+        lazyVids.forEach(v => io.observe(v));
     })();
 
     // ═══ LIVE FLOW ANIMATION ═══
