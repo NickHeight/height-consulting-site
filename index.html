@@ -3,1698 +3,1288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Height Consulting | AI-Powered B2B Solutions</title>
+    <title>Height Consulting — AI Automation Systems for B2B</title>
+    <meta name="description" content="We design and ship workflow automations, custom AI agents, and integration stacks that compress weeks of manual ops into minutes — for high-velocity B2B teams.">
+    <meta property="og:title" content="Height Consulting — AI Automation Systems">
+    <meta property="og:description" content="Workflow automations, custom AI agents, and integration stacks for high-velocity B2B teams.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://heightconsultingfirm.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --bg-primary: #0b1120;
-            --bg-secondary: #0f1729;
-            --bg-card: #141e33;
-            --text-primary: #f5f7fa;
-            --text-secondary: #94a3b8;
-            --accent: #c9a84c;
-            --accent-dim: rgba(201, 168, 76, 0.15);
-            --accent-glow: rgba(201, 168, 76, 0.08);
-            --blue: #2563eb;
-            --blue-dim: rgba(37, 99, 235, 0.15);
-            --blue-glow: rgba(37, 99, 235, 0.08);
-            --border: rgba(148, 163, 184, 0.08);
+            /* White + Navy + Gold — editorial luxe consulting palette */
+            --bg: #f9f7f1;            /* warm cream */
+            --bg-soft: #f1ede2;       /* deeper cream */
+            --surface: #ffffff;       /* pure white */
+            --surface-elev: #ffffff;
+            --text: #0d1538;          /* deep navy ink */
+            --text-dim: #4a5478;      /* muted navy */
+            --text-mute: #8b94b3;
+            --accent: #1a3aa8;        /* royal blue — primary brand */
+            --accent-bright: #2f57d6;
+            --accent-soft: rgba(26, 58, 168, 0.10);
+            --accent-glow: rgba(26, 58, 168, 0.06);
+            --gold: #c9a247;          /* warm gold — secondary accent */
+            --gold-bright: #e0bb5e;
+            --gold-soft: rgba(201, 162, 71, 0.14);
+            --gold-glow: rgba(201, 162, 71, 0.08);
+            --border: rgba(13, 21, 56, 0.08);
+            --border-strong: rgba(13, 21, 56, 0.18);
+            --danger: #c64f3d;
+            --ok: #2d8055;
+
+            /* Type scale */
+            --display: 'Instrument Serif', Georgia, serif;
+            --sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+            --mono: 'JetBrains Mono', SFMono-Regular, Menlo, monospace;
+
+            /* Motion tokens */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+            --dur-fast: 0.2s;
+            --dur-base: 0.4s;
+            --dur-slow: 0.7s;
+            --dur-grand: 1.2s;
         }
-        html { font-size: 16px; }
+
+        html { font-size: 16px; scroll-behavior: smooth; }
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             overflow-x: hidden;
-            cursor: none;
+            font-feature-settings: "ss01", "cv11";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        @media (hover: none) { body { cursor: auto; } }
+        @media (pointer: fine) { body { cursor: none; } }
+        a { color: inherit; text-decoration: none; }
+        button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        img, video { display: block; max-width: 100%; height: auto; }
+
+        ::selection { background: var(--accent); color: #fff; }
+
+        /* Dark-scope sections (over video backgrounds) — invert tokens */
+        .hero, .atmos {
+            --text: #f6f1e6;
+            --text-dim: #d0ccc1;
+            --text-mute: #8a8479;
+            --border: rgba(246, 241, 230, 0.12);
+            --border-strong: rgba(246, 241, 230, 0.24);
+            color: var(--text);
+        }
 
         /* ═══ PRELOADER ═══ */
         .preloader {
             position: fixed; inset: 0; z-index: 9999;
-            background: var(--bg-primary);
+            background: #0a1228;  /* deep navy intro */
             display: flex; flex-direction: column;
-            align-items: center; justify-content: center; gap: 32px;
+            align-items: center; justify-content: center; gap: 40px;
         }
-        .preloader-logo { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; color: var(--text-primary); opacity: 0; }
-        .preloader-logo span { color: var(--accent); }
-        .preloader-bar-track { width: 220px; height: 1px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
-        .preloader-bar { position: absolute; top: 0; left: 0; width: 0; height: 100%; background: var(--accent); }
-        .preloader-counter { font-size: 13px; letter-spacing: 0.3em; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+        .preloader-mark {
+            font-family: var(--display); font-size: 56px; font-weight: 400;
+            color: #f6f1e6; letter-spacing: -0.02em; opacity: 0;
+        }
+        .preloader-bar-track { width: 240px; height: 1px; background: rgba(246,241,230,0.12); position: relative; overflow: hidden; }
+        .preloader-bar { position: absolute; inset: 0; width: 0; background: var(--gold); }
+        .preloader-pct {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em;
+            color: rgba(246,241,230,0.55); font-variant-numeric: tabular-nums;
+        }
 
-        /* ═══ NOISE OVERLAY ═══ */
-        .noise-overlay {
-            position: fixed; inset: 0; pointer-events: none; z-index: 9990; opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        /* ═══ NOISE + GRAIN ═══ */
+        .grain {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9990; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
         }
 
         /* ═══ SCROLL PROGRESS ═══ */
-        .scroll-progress { position: fixed; top: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--accent), var(--blue)); z-index: 9995; }
+        .progress { position: fixed; top: 0; left: 0; width: 0; height: 2px; background: var(--accent); z-index: 9995; transition: width 0.05s linear; }
 
-        /* ═══ CUSTOM CURSOR ═══ */
-        .cursor-ring {
-            width: 40px; height: 40px; border: 1px solid rgba(37,99,235,0.4);
-            border-radius: 50%; position: fixed; top: -20px; left: -20px;
-            pointer-events: none; z-index: 9994; mix-blend-mode: difference;
-            transition: width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s;
+        /* ═══ CURSOR ═══ */
+        .cursor {
+            width: 32px; height: 32px;
+            border: 1px solid var(--accent);
+            border-radius: 50%; position: fixed; top: -16px; left: -16px;
+            pointer-events: none; z-index: 9994;
+            transition: width var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out), opacity var(--dur-fast), border-color var(--dur-fast);
+            opacity: 0;
+            mix-blend-mode: multiply;
         }
         .cursor-dot {
-            width: 5px; height: 5px; background: var(--accent); border-radius: 50%;
-            position: fixed; top: -2.5px; left: -2.5px; pointer-events: none; z-index: 9994;
+            width: 4px; height: 4px; background: var(--gold); border-radius: 50%;
+            position: fixed; top: -2px; left: -2px; pointer-events: none; z-index: 9994;
+            opacity: 0;
         }
-        .cursor-ring.active { width: 64px; height: 64px; border-color: var(--accent); }
-        @media (hover: none) { .cursor-ring, .cursor-dot { display: none !important; } }
+        .cursor.is-hover { width: 56px; height: 56px; background: var(--accent-soft); border-color: var(--gold); }
+        @media (pointer: coarse) { .cursor, .cursor-dot { display: none; } }
 
         /* ═══ NAV ═══ */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 24px 60px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(11,17,32,0.88); backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--border); transform: translateY(-100%);
+            padding: 22px 48px; display: flex; justify-content: space-between; align-items: center;
+            transition: padding var(--dur-base) var(--ease-out), background var(--dur-base);
         }
-        .nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--text-primary); text-decoration: none; letter-spacing: 0.02em; }
-        .nav-logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 40px; list-style: none; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; position: relative; }
-        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.4s cubic-bezier(0.16,1,0.3,1); }
-        .nav-links a:hover { color: var(--accent); }
+        /* When over hero (dark video), nav text is light */
+        nav { color: #f6f1e6; }
+        nav .nav-mark, nav .nav-links a { color: #f6f1e6; }
+        nav .nav-links a { color: rgba(246,241,230,0.78); }
+        nav.scrolled {
+            background: rgba(249, 247, 241, 0.92);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            padding: 14px 48px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+        nav.scrolled .nav-mark { color: var(--text); }
+        nav.scrolled .nav-links a { color: var(--text-dim); }
+        .nav-mark {
+            font-family: var(--display); font-size: 22px; font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+        .nav-links { display: flex; gap: 38px; list-style: none; }
+        .nav-links a {
+            font-size: 13px; font-weight: 500;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            transition: color var(--dur-fast); position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -6px; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width var(--dur-base) var(--ease-out);
+        }
+        .nav-links a:hover { color: var(--gold) !important; }
         .nav-links a:hover::after { width: 100%; }
-        .nav-cta { padding: 10px 28px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: none; text-decoration: none; position: relative; overflow: hidden; }
-        .nav-cta::before { content: ''; position: absolute; inset: 0; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+        .nav-cta {
+            padding: 11px 26px; border: 1px solid var(--gold); color: var(--gold);
+            font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+            position: relative; overflow: hidden; transition: color var(--dur-base);
+        }
+        .nav-cta::before {
+            content: ''; position: absolute; inset: 0; background: var(--gold);
+            transform: scaleX(0); transform-origin: right;
+            transition: transform var(--dur-base) var(--ease-out);
+        }
         .nav-cta:hover::before { transform: scaleX(1); transform-origin: left; }
-        .nav-cta i { position: relative; z-index: 1; font-style: normal; transition: color 0.3s; }
-        .nav-cta:hover i { color: var(--bg-primary); }
+        .nav-cta span { position: relative; z-index: 1; transition: color var(--dur-base); }
+        .nav-cta:hover span { color: #0a1228; }
+        nav.scrolled .nav-cta { background: var(--accent); border-color: var(--accent); color: #fff; }
+        nav.scrolled .nav-cta::before { background: var(--accent-bright); }
+        nav.scrolled .nav-cta span { color: #fff; }
+        nav.scrolled .nav-cta:hover span { color: #fff; }
+        .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+        .nav-burger span { width: 22px; height: 1px; background: var(--text); transition: transform var(--dur-base); }
 
         /* ═══ HERO ═══ */
-        .hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 80px; }
-        .hero-video-bg { position: absolute; inset: 0; z-index: 0; }
-        .hero-video-bg video { width: 100%; height: 100%; object-fit: cover; }
-        .hero-video-overlay { position: absolute; inset: 0; z-index: 0; background: rgba(11,17,32,0.65); }
-        #particle-canvas { position: absolute; inset: 0; z-index: 1; }
-        .hero-gradient-orbs { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15;
-            will-change: transform;
+        .hero {
+            position: relative; min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 48px 80px; overflow: hidden;
         }
-        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(37,99,235,0.5), transparent 70%); top: 10%; left: 15%; animation: orbFloat1 18s ease-in-out infinite; }
-        .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,168,76,0.4), transparent 70%); top: 50%; right: 10%; animation: orbFloat2 22s ease-in-out infinite; }
-        .orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(37,99,235,0.3), transparent 70%); bottom: 10%; left: 40%; animation: orbFloat3 20s ease-in-out infinite; }
-        @keyframes orbFloat1 { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(60px,-40px) scale(1.1); } 66% { transform: translate(-30px,50px) scale(0.95); } }
-        @keyframes orbFloat2 { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(-50px,30px) scale(0.9); } 66% { transform: translate(40px,-60px) scale(1.08); } }
-        @keyframes orbFloat3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,-30px) scale(1.12); } }
-
-        .hero-content { position: relative; z-index: 3; text-align: center; max-width: 920px; padding: 0 40px; }
-        .hero-badge {
-            display: inline-block; padding: 8px 22px; background: var(--accent-dim);
-            border: 1px solid rgba(201,168,76,0.2); border-radius: 100px;
-            font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
-            margin-bottom: 32px; opacity: 0;
+        .hero-video {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
         }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(42px,6vw,78px); font-weight: 500; line-height: 1.06; margin-bottom: 28px; letter-spacing: -0.01em; }
-        .hero-title .char { display: inline-block; opacity: 0; transform: translateY(50px) rotateX(-20deg); }
-        .word { display: inline-block; white-space: nowrap; }
-        .char { display: inline-block; }
-        .hero-title em { font-style: italic; color: var(--accent); }
-        .hero-title .word-wrap { display: inline-block; overflow: hidden; }
-        .hero-sub { font-size: 18px; color: var(--text-secondary); max-width: 600px; margin: 0 auto 48px; font-weight: 300; line-height: 1.8; opacity: 0; }
-        .hero-ctas { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; opacity: 0; }
-        .btn-primary {
-            padding: 16px 42px; background: var(--accent); color: var(--bg-primary);
-            font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-            border: none; cursor: none; text-decoration: none; position: relative; overflow: hidden;
-            transition: box-shadow 0.4s;
-        }
-        .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s ease; }
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:hover { box-shadow: 0 0 40px rgba(201,168,76,0.3), 0 0 80px rgba(201,168,76,0.1); }
-        .btn-secondary { padding: 16px 42px; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; cursor: none; text-decoration: none; transition: border-color 0.3s, color 0.3s, box-shadow 0.4s; }
-        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 30px rgba(201,168,76,0.1); }
-        .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; }
-        .hero-scroll span { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); }
-        .scroll-line { width: 1px; height: 40px; background: var(--border); position: relative; overflow: hidden; }
-        .scroll-line::after { content: ''; position: absolute; top: -40px; left: 0; width: 1px; height: 40px; background: var(--accent); animation: scrollDown 2s ease-in-out infinite; }
-        @keyframes scrollDown { 0% { top: -40px; } 50% { top: 40px; } 100% { top: -40px; } }
-
-        /* ═══ SECTION DIVIDERS ═══ */
-        .section-divider {
-            height: 1px; position: relative; overflow: hidden;
-            background: var(--border);
-        }
-        .section-divider::after {
-            content: ''; position: absolute; top: 0; left: -30%;
-            width: 30%; height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: dividerSweep 4s ease-in-out infinite;
-        }
-        @keyframes dividerSweep { 0% { left: -30%; } 100% { left: 100%; } }
-
-        /* ═══ MARQUEE ═══ */
-        .marquee-section { padding: 22px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
-        .marquee-track { display: flex; width: max-content; gap: 60px; align-items: center; }
-        .marquee-item { font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; opacity: 0.5; }
-        .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.4; flex-shrink: 0; }
-
-        /* ═══ VIDEO BACKGROUND SECTIONS ═══ */
-        .video-bg-section {
-            position: relative; padding: 180px 60px; text-align: center; overflow: hidden;
-            min-height: 80vh; display: flex; align-items: center; justify-content: center;
-        }
-        .video-bg-layer {
-            position: absolute; inset: 0; z-index: 0;
-        }
-        .video-bg-layer video {
+        .hero-video video {
             width: 100%; height: 100%; object-fit: cover;
+            filter: saturate(0.75) contrast(1.05) brightness(0.45);
         }
-        .video-bg-overlay {
-            position: absolute; inset: 0; z-index: 1;
-            background: rgba(11, 17, 32, 0.7);
-            backdrop-filter: blur(1px);
+        .hero-mesh {
+            position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background:
+                radial-gradient(ellipse at 22% 30%, rgba(201,162,71,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 65%, rgba(26,58,168,0.14) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(10,18,40,0.35) 0%, rgba(10,18,40,0.82) 100%);
         }
-        .video-bg-content {
-            position: relative; z-index: 2; max-width: 800px;
+        #particle-canvas { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+        .hero-content {
+            position: relative; z-index: 3;
+            max-width: 1280px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1fr;
         }
-        .video-bg-label { font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-        .video-bg-title { font-family: 'Playfair Display', serif; font-size: clamp(32px,4.5vw,58px); font-weight: 500; line-height: 1.1; margin-bottom: 24px; color: var(--text-primary); }
-        .video-bg-title em { font-style: italic; color: var(--accent); }
-        .video-bg-desc { font-size: 18px; color: var(--text-secondary); line-height: 1.8; font-weight: 300; max-width: 600px; margin: 0 auto 40px; }
-        .video-bg-tagline { font-family: 'Playfair Display', serif; font-size: clamp(18px,2.5vw,28px); font-weight: 400; color: var(--accent); letter-spacing: 0.04em; font-style: italic; opacity: 0.8; }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: var(--mono); font-size: 11px; font-weight: 500;
+            letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+            margin-bottom: 36px; opacity: 0;
+        }
+        .hero-eyebrow::before {
+            content: ''; width: 24px; height: 1px; background: var(--gold);
+        }
+        .hero-eyebrow .pulse {
+            display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--ok); margin-left: 4px;
+            box-shadow: 0 0 0 0 var(--ok); animation: pulse 2.4s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(127,174,138,0.6); }
+            70% { box-shadow: 0 0 0 10px rgba(127,174,138,0); }
+            100% { box-shadow: 0 0 0 0 rgba(127,174,138,0); }
+        }
+        h1.hero-title {
+            font-family: var(--display); font-weight: 400;
+            font-size: clamp(48px, 8vw, 112px); line-height: 0.96;
+            letter-spacing: -0.025em; margin-bottom: 32px;
+            max-width: 18ch;
+        }
+        h1.hero-title em { font-style: italic; color: var(--gold); }
+        .hero-title .line { display: block; overflow: hidden; }
+        .hero-title .line span { display: inline-block; transform: translateY(110%); }
 
-        /* ═══ FLOATING METRICS SHOWCASE ═══ */
-        .metrics-showcase {
-            padding: 160px 60px; position: relative; overflow: hidden;
-            background: linear-gradient(170deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        .hero-sub {
+            font-size: clamp(16px, 1.4vw, 19px); color: var(--text-dim);
+            line-height: 1.65; max-width: 56ch;
+            margin-bottom: 48px; font-weight: 300;
+            opacity: 0;
         }
-        .metrics-showcase::before {
-            content: ''; position: absolute; top: -200px; right: -200px;
-            width: 600px; height: 600px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(37,99,235,0.06), transparent 70%);
-            animation: metricsOrb 15s ease-in-out infinite;
+        .hero-ctas { display: flex; gap: 18px; flex-wrap: wrap; opacity: 0; margin-bottom: 80px; }
+        .btn {
+            padding: 18px 36px; font-size: 13px; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            display: inline-flex; align-items: center; gap: 12px;
+            position: relative; overflow: hidden;
+            transition: transform var(--dur-base) var(--ease-out);
         }
-        .metrics-showcase::after {
-            content: ''; position: absolute; bottom: -150px; left: -100px;
-            width: 500px; height: 500px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,168,76,0.05), transparent 70%);
-            animation: metricsOrb 20s ease-in-out infinite reverse;
+        .btn-primary {
+            background: var(--accent); color: #fff;
         }
-        @keyframes metricsOrb { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px, -30px); } }
-        .metrics-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
-        .metrics-header { text-align: center; margin-bottom: 80px; }
-        .metrics-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+        .btn-primary::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+            transform: translateX(-100%); transition: transform 0.7s ease;
         }
-        .metric-card {
-            background: rgba(20, 30, 51, 0.6); backdrop-filter: blur(20px);
-            border: 1px solid rgba(148, 163, 184, 0.08); border-radius: 16px;
-            padding: 48px 36px; text-align: center; position: relative; overflow: hidden;
-            transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s;
+        .btn-primary:hover::after { transform: translateX(100%); }
+        .btn-primary:hover { box-shadow: 0 0 40px rgba(26,58,168,0.45); background: var(--accent-bright); }
+        .btn-ghost {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--border-strong);
+            transition: border-color var(--dur-base), color var(--dur-base);
         }
-        .metric-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(201,168,76,0.2);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(201,168,76,0.05);
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+        /* On dark hero: ghost button gets light border */
+        .hero .btn-ghost { color: #f6f1e6; border-color: rgba(246,241,230,0.32); }
+        .hero .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+        .btn .arrow {
+            width: 16px; height: 1px; background: currentColor; position: relative;
+            transition: width var(--dur-base) var(--ease-out);
         }
-        .metric-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), var(--blue), transparent);
-            opacity: 0; transition: opacity 0.4s;
+        .btn .arrow::after {
+            content: ''; position: absolute; right: 0; top: -3px;
+            width: 7px; height: 7px;
+            border-top: 1px solid currentColor; border-right: 1px solid currentColor;
+            transform: rotate(45deg);
         }
-        .metric-card:hover::before { opacity: 1; }
-        .metric-card-icon {
-            width: 64px; height: 64px; margin: 0 auto 24px;
-            background: linear-gradient(135deg, var(--accent-dim), var(--blue-dim));
-            border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            transition: transform 0.4s, box-shadow 0.4s;
-        }
-        .metric-card:hover .metric-card-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 30px rgba(201,168,76,0.15);
-        }
-        .metric-card-icon svg { width: 28px; height: 28px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
-        .metric-card-value {
-            font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 600;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-        .metric-card-label { font-size: 14px; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 16px; }
-        .metric-card-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-        .metric-card-fill {
-            height: 100%; border-radius: 2px; width: 0;
-            background: linear-gradient(90deg, var(--blue), var(--accent));
-            transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
-        }
-        .metric-card.revealed .metric-card-fill { width: var(--fill-width, 80%); }
+        .btn:hover .arrow { width: 26px; }
 
-        /* ═══ ABSTRACT VISUALS (h-panel replacements) ═══ */
-        .abstract-visual {
-            height: 400px; border-radius: 8px; overflow: hidden;
-            border: 1px solid var(--border); position: relative;
-            background: var(--bg-secondary);
+        .hero-foot {
+            position: absolute; bottom: 40px; left: 48px; right: 48px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            z-index: 3; opacity: 0;
         }
-        .abstract-visual .av-layer {
-            position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4;
-            animation: avFloat 12s ease-in-out infinite;
+        .hero-scroll-cue {
+            display: flex; align-items: center; gap: 14px;
+            font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+            color: var(--text-mute); text-transform: uppercase;
         }
-        .abstract-visual .av-1 { width: 300px; height: 300px; background: rgba(37,99,235,0.3); top: -50px; left: -50px; }
-        .abstract-visual .av-2 { width: 250px; height: 250px; background: rgba(201,168,76,0.25); bottom: -30px; right: -30px; animation-delay: -4s; animation-duration: 16s; }
-        .abstract-visual .av-3 { width: 200px; height: 200px; background: rgba(37,99,235,0.2); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -8s; animation-duration: 14s; }
-        @keyframes avFloat {
-            0%,100% { transform: translate(0,0) scale(1); }
-            33% { transform: translate(20px,-15px) scale(1.1); }
-            66% { transform: translate(-15px,20px) scale(0.95); }
+        .hero-scroll-line {
+            width: 1px; height: 36px; background: var(--border-strong); position: relative; overflow: hidden;
         }
-        .abstract-visual .av-grid {
-            position: absolute; inset: 0;
-            background-image:
-                linear-gradient(rgba(148,163,184,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148,163,184,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+        .hero-scroll-line::after {
+            content: ''; position: absolute; top: -36px; left: 0;
+            width: 1px; height: 36px; background: var(--accent);
+            animation: scrollDrip 2.2s ease-in-out infinite;
         }
-        .abstract-visual .av-icon {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
-            background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.15);
-            border-radius: 20px; backdrop-filter: blur(10px);
+        @keyframes scrollDrip { 0% { top: -36px; } 60%, 100% { top: 36px; } }
+        .hero-meta {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+            color: var(--text-mute); text-align: right; line-height: 1.8;
         }
-        .abstract-visual .av-icon svg { width: 36px; height: 36px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
-        .abstract-visual .av-dots { position: absolute; inset: 0; }
-        .abstract-visual .av-dot {
-            position: absolute; width: 4px; height: 4px; border-radius: 50%;
-            background: var(--accent); opacity: 0.2;
-            animation: avDotPulse 3s ease-in-out infinite;
-        }
-        @keyframes avDotPulse { 0%,100% { opacity: 0.1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.5); } }
+        .hero-meta strong { color: var(--text); font-weight: 500; }
 
-        /* ═══ CTA ANIMATED GRADIENT ═══ */
-        .cta-gradient-bg {
-            position: absolute; inset: 0; z-index: 0; overflow: hidden;
+        /* ═══ STACK MARQUEE ═══ */
+        .stack {
+            padding: 28px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+            overflow: hidden; background: var(--bg-soft);
         }
-        .cta-gradient-bg .cta-orb {
-            position: absolute; border-radius: 50%; filter: blur(120px);
+        .stack-inner {
+            display: flex; align-items: center; gap: 64px; width: max-content;
+            animation: scrollLeft 38s linear infinite;
         }
-        .cta-gradient-bg .cta-orb-1 {
-            width: 500px; height: 500px; background: rgba(37,99,235,0.15);
-            top: -100px; left: -100px; animation: ctaOrb1 20s ease-in-out infinite;
+        @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .stack-label {
+            font-family: var(--mono); font-size: 11px; font-weight: 500;
+            letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-mute);
+            white-space: nowrap; padding: 0 24px;
         }
-        .cta-gradient-bg .cta-orb-2 {
-            width: 400px; height: 400px; background: rgba(201,168,76,0.12);
-            bottom: -100px; right: -100px; animation: ctaOrb2 25s ease-in-out infinite;
+        .stack-item {
+            font-family: var(--display); font-size: 22px; font-weight: 400;
+            color: var(--text-dim); white-space: nowrap;
+            transition: color var(--dur-base);
         }
-        .cta-gradient-bg .cta-orb-3 {
-            width: 300px; height: 300px; background: rgba(37,99,235,0.1);
-            top: 50%; left: 50%; transform: translate(-50%,-50%); animation: ctaOrb3 18s ease-in-out infinite;
+        .stack-item:hover { color: var(--accent); }
+        .stack-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: 0.7; flex-shrink: 0; }
+
+        /* ═══ SECTION FOUNDATION ═══ */
+        section { position: relative; padding: 160px 48px; }
+        .container { max-width: 1280px; margin: 0 auto; }
+        .section-head { margin-bottom: 96px; max-width: 760px; }
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 12px;
+            font-family: var(--mono); font-size: 11px; font-weight: 500;
+            letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+            margin-bottom: 28px;
         }
-        @keyframes ctaOrb1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px,60px); } }
-        @keyframes ctaOrb2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-60px,-80px); } }
-        @keyframes ctaOrb3 { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.3); } }
-        .cta-gradient-bg .cta-mesh {
-            position: absolute; inset: 0;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(37,99,235,0.06) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(201,168,76,0.06) 0%, transparent 50%);
+        .eyebrow::before {
+            content: ''; width: 24px; height: 1px; background: var(--gold);
+        }
+        h2 {
+            font-family: var(--display); font-weight: 400;
+            font-size: clamp(38px, 5.5vw, 72px); line-height: 1.02;
+            letter-spacing: -0.02em; margin-bottom: 28px;
+        }
+        h2 em { font-style: italic; color: var(--gold); }
+        h3 {
+            font-family: var(--display); font-weight: 400;
+            font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15;
+            letter-spacing: -0.015em; margin-bottom: 16px;
+        }
+        .section-sub {
+            font-size: 18px; color: var(--text-dim); line-height: 1.65;
+            font-weight: 300; max-width: 60ch;
         }
 
-        /* ═══ STATS ═══ */
-        .stats { padding: 0 60px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto; border: 1px solid var(--border); }
-        .stat { padding: 64px 40px; text-align: center; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
-        .stat:last-child { border-right: none; }
-        .stat::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(201,168,76,0.04), transparent 70%); opacity: 0; transition: opacity 0.6s; }
-        .stat:hover::before { opacity: 1; }
-        .stat::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--accent); transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
-        .stat.revealed::after { width: 40px; }
-        .stat-number { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
-        .stat-label { font-size: 13px; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; }
-
-        /* ═══ HORIZONTAL SCROLL SHOWCASE ═══ */
-        .horizontal-section { position: relative; overflow: hidden; }
-        .horizontal-section .section-header { padding: 80px 60px 40px; text-align: center; }
-        .horizontal-wrapper {
-            display: flex; width: max-content; gap: 0;
+        /* ═══ CAPABILITIES ═══ */
+        .capabilities {
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 50%, var(--bg) 100%);
         }
-        .h-panel {
-            width: 100vw; height: 100vh; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            padding: 60px; position: relative;
+        .cap-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
         }
-        .h-panel-inner {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-            align-items: center; max-width: 1200px; width: 100%;
+        .cap-card {
+            background: var(--surface); padding: 56px 48px;
+            position: relative; overflow: hidden;
+            transition: background var(--dur-slow), transform var(--dur-base);
         }
-        .h-panel-visual {
-            height: 400px; border-radius: 8px; overflow: hidden;
-            border: 1px solid var(--border); position: relative;
-        }
-        .h-panel-visual video { width: 100%; height: 100%; object-fit: cover; }
-        .h-panel-visual-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(10,10,15,0.2), rgba(201,168,76,0.05));
+        .cap-card:hover { background: var(--bg); }
+        .cap-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), var(--gold-glow), transparent 50%);
+            opacity: 0; transition: opacity var(--dur-base);
             pointer-events: none;
         }
-        .h-panel-number {
-            font-family: 'Playfair Display', serif; font-size: 120px;
-            color: rgba(201,168,76,0.06); font-weight: 700;
-            position: absolute; top: 40px; right: 60px; line-height: 1;
+        .cap-card:hover::before { opacity: 1; }
+        .cap-num {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+            color: var(--gold); margin-bottom: 32px; display: flex; align-items: center; gap: 12px;
         }
-        .h-panel-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
-        .h-panel-title { font-family: 'Playfair Display', serif; font-size: clamp(28px,3vw,42px); font-weight: 500; line-height: 1.15; margin-bottom: 20px; }
-        .h-panel-title em { font-style: italic; color: var(--accent); }
-        .h-panel-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 32px; font-weight: 300; }
-        .h-panel-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-        .h-panel-features li { font-size: 14px; color: var(--text-secondary); padding-left: 20px; position: relative; }
-        .h-panel-features li::before { content: ''; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
-        .h-scroll-progress { position: absolute; bottom: 40px; left: 60px; right: 60px; height: 1px; background: var(--border); }
-        .h-scroll-fill { height: 100%; background: var(--accent); width: 0; }
-        .h-scroll-counter { position: absolute; bottom: 60px; right: 60px; font-size: 13px; letter-spacing: 0.15em; color: var(--text-secondary); }
-
-        /* ═══ SECTIONS ═══ */
-        section { padding: 140px 60px; }
-        .section-inner { max-width: 1200px; margin: 0 auto; }
-        .section-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px,4vw,52px); font-weight: 500; line-height: 1.15; margin-bottom: 24px; max-width: 700px; }
-        .section-title .split-char { display: inline-block; opacity: 0; transform: translateY(30px); }
-        .section-desc { font-size: 17px; color: var(--text-secondary); max-width: 560px; line-height: 1.8; font-weight: 300; }
-
-        /* ═══ SERVICES ═══ */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 80px; max-width: 1200px; margin-left: auto; margin-right: auto; }
-
-        /* ═══ LIVE AUTOMATION FLOW ═══ */
-        .flow-section {
-            padding: 160px 60px; position: relative; overflow: hidden;
-            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+        .cap-num::after {
+            content: ''; flex: 1; height: 1px; background: var(--border);
         }
-        .flow-section::before {
-            content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 400px; border-radius: 50%; pointer-events: none;
-            background: radial-gradient(ellipse, rgba(37,99,235,0.08), transparent 70%); filter: blur(60px);
+        .cap-card h3 { margin-bottom: 14px; }
+        .cap-card p {
+            color: var(--text-dim); font-size: 15px; line-height: 1.7;
+            font-weight: 300; margin-bottom: 28px; max-width: 42ch;
+        }
+        .cap-stack {
+            display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .cap-tag {
+            font-family: var(--mono); font-size: 10px; font-weight: 500;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            padding: 6px 12px; border: 1px solid var(--border);
+            color: var(--text-mute);
+            transition: color var(--dur-base), border-color var(--dur-base);
+        }
+        .cap-card:hover .cap-tag { color: var(--text-dim); border-color: var(--border-strong); }
+
+        /* ═══ FLOW VISUALIZATION ═══ */
+        .flow {
+            background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+            padding: 180px 48px;
+            position: relative; overflow: hidden;
+        }
+        .flow::before {
+            content: ''; position: absolute; top: 0; left: -200px;
+            width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(26,58,168,0.05), transparent 70%);
+            filter: blur(60px);
+        }
+        .flow::after {
+            content: ''; position: absolute; bottom: 0; right: -200px;
+            width: 500px; height: 500px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,162,71,0.05), transparent 70%);
+            filter: blur(60px);
         }
         .flow-stage {
-            max-width: 1200px; margin: 80px auto 0; position: relative; z-index: 2;
-            background: rgba(15, 23, 41, 0.6); border: 1px solid var(--border);
-            border-radius: 4px; padding: 40px 32px; backdrop-filter: blur(12px);
+            position: relative;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
         }
-        .flow-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
-            flex-wrap: wrap; gap: 16px;
+        .flow-canvas {
+            position: relative; min-height: 540px;
+            background:
+                linear-gradient(rgba(13,21,56,0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+                linear-gradient(90deg, rgba(13,21,56,0.06) 1px, transparent 1px) 0 0 / 32px 32px,
+                #fdfcf8;
+            border: 1px solid var(--border-strong);
+            border-radius: 4px;
+            padding: 24px;
+            box-shadow: 0 24px 60px -20px rgba(13,21,56,0.18), 0 2px 6px rgba(13,21,56,0.04);
         }
-        .flow-header-left { display: flex; align-items: center; gap: 12px; }
-        .flow-live-dot {
-            width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-            box-shadow: 0 0 12px rgba(34,197,94,0.7); animation: livePulse 2s ease-in-out infinite;
+        .flow-status {
+            position: absolute; top: 24px; right: 24px;
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: var(--mono); font-size: 10px; font-weight: 500;
+            letter-spacing: 0.18em; text-transform: uppercase; color: var(--ok);
+            background: rgba(127,174,138,0.08); border: 1px solid rgba(127,174,138,0.18);
+            padding: 6px 12px;
         }
-        @keyframes livePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
-        .flow-header-title { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #22c55e; font-weight: 500; }
-        .flow-header-title strong { color: var(--text-primary); font-weight: 500; margin-left: 8px; }
-        .flow-counter { font-family: 'Inter', monospace; font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
-        .flow-counter strong { color: var(--accent); font-weight: 500; margin-right: 4px; }
-        .flow-svg-wrap { width: 100%; position: relative; }
-        .flow-svg { width: 100%; height: auto; display: block; }
-        .flow-line { fill: none; stroke: rgba(201,168,76,0.4); stroke-width: 1.5; stroke-dasharray: 6 10; animation: flowDash 1.8s linear infinite; }
-        .flow-line-branch { stroke: rgba(37,99,235,0.5); }
-        @keyframes flowDash { to { stroke-dashoffset: -32; } }
-        .flow-node rect {
-            fill: var(--bg-card); stroke: rgba(148,163,184,0.15); stroke-width: 1;
-            transition: stroke 0.3s, filter 0.3s;
+        .flow-status .pulse { width: 6px; height: 6px; background: var(--ok); border-radius: 50%; animation: pulse 2.4s infinite; }
+        .flow-node {
+            position: absolute;
+            background: #fff; border: 1px solid var(--border-strong);
+            padding: 14px 18px;
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+            color: var(--text-dim);
+            min-width: 168px;
+            display: flex; align-items: center; gap: 10px;
+            opacity: 0; transition: opacity 0.6s var(--ease-out), border-color 0.4s, color 0.4s, box-shadow 0.4s;
+            box-shadow: 0 2px 6px rgba(13,21,56,0.04);
         }
-        .flow-node.pulse rect { stroke: var(--accent); filter: drop-shadow(0 0 8px rgba(201,168,76,0.5)); }
-        .flow-node text {
-            fill: var(--text-primary); font-family: 'Inter', sans-serif;
-            font-size: 13px; font-weight: 500; text-anchor: middle;
+        .flow-node.is-active {
+            opacity: 1; border-color: var(--accent); color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft), 0 8px 24px rgba(26,58,168,0.18);
         }
-        .flow-node .flow-node-sub { fill: var(--text-secondary); font-size: 10px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
-        .flow-node-icon { stroke: var(--accent); stroke-width: 1.5; fill: none; }
-        .flow-node.branch .flow-node-icon { stroke: var(--blue); }
-        .flow-event-log {
-            margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);
-            font-family: 'Inter', monospace; font-size: 12px; color: var(--text-secondary);
-            max-height: 100px; overflow: hidden; position: relative;
+        .flow-node.is-done {
+            opacity: 1; border-color: rgba(45,128,85,0.45); color: var(--text-dim);
         }
-        .flow-event-log::after {
-            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40px;
-            background: linear-gradient(to bottom, transparent, rgba(15,23,41,0.9));
+        .flow-node .dot {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--text-mute);
+            flex-shrink: 0; transition: background 0.3s, box-shadow 0.3s;
         }
-        .flow-event-row {
-            display: grid; grid-template-columns: 70px 1fr auto; gap: 16px;
-            padding: 4px 0; opacity: 0.9; font-variant-numeric: tabular-nums;
+        .flow-node.is-active .dot {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-soft);
         }
-        .flow-event-row:first-child { opacity: 1; color: var(--text-primary); }
-        .flow-event-time { color: var(--text-secondary); font-size: 11px; }
-        .flow-event-msg { color: var(--text-primary); font-size: 12px; }
-        .flow-event-status { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #22c55e; }
-        @media (max-width: 768px) {
-            .flow-section { padding: 120px 24px; }
-            .flow-stage { padding: 24px 16px; }
-            .flow-header { flex-direction: column; align-items: flex-start; }
-            .flow-svg { min-width: 600px; }
-            .flow-svg-wrap { overflow-x: auto; }
+        .flow-node.is-done .dot { background: var(--ok); }
+        .flow-line {
+            position: absolute; height: 1px;
+            background: rgba(13,21,56,0.10);
+            transform-origin: left center;
+            z-index: 0;
+        }
+        .flow-line.is-on {
+            background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+            box-shadow: 0 0 8px var(--accent-soft);
+        }
+        /* Node positions */
+        .fn-1 { top: 60px;  left: 48px; }
+        .fn-2 { top: 60px;  right: 48px; }
+        .fn-3 { top: 200px; left: 50%; transform: translateX(-50%); }
+        .fn-4 { top: 340px; left: 48px; }
+        .fn-5 { top: 340px; right: 48px; }
+        .fn-6 { bottom: 60px; left: 50%; transform: translateX(-50%); }
+        .fl-1 { top: 78px; left: 220px; width: 120px; }
+        .fl-2 { top: 90px; left: 150px; width: 150px; transform: rotate(58deg); transform-origin: left center; }
+        .fl-3 { top: 90px; right: 150px; width: 150px; transform: rotate(122deg); transform-origin: left center; }
+        .fl-4 { top: 220px; left: 130px; width: 160px; transform: rotate(58deg); transform-origin: left center; }
+        .fl-5 { top: 220px; right: 130px; width: 160px; transform: rotate(122deg); transform-origin: left center; }
+        .fl-6 { top: 360px; left: 220px; width: 120px; }
+
+        .flow-copy h2 { margin-bottom: 24px; }
+        .flow-copy p { color: var(--text-dim); font-size: 17px; line-height: 1.7; font-weight: 300; margin-bottom: 32px; max-width: 50ch; }
+        .flow-metrics {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
+            padding-top: 32px; border-top: 1px solid var(--border);
+        }
+        .flow-metric .v {
+            font-family: var(--display); font-size: 44px; font-weight: 400;
+            color: var(--accent); line-height: 1; letter-spacing: -0.02em; margin-bottom: 6px;
+        }
+        .flow-metric .v small { color: var(--gold); font-style: italic; }
+        .flow-metric .l {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--text-mute);
         }
 
-        /* ═══ LIVE STATUS PILL ═══ */
-        .status-pill {
-            position: fixed; bottom: 28px; left: 28px; z-index: 200;
-            display: flex; align-items: center; gap: 12px;
-            padding: 10px 18px; background: rgba(15,23,41,0.85);
-            border: 1px solid rgba(34,197,94,0.3); border-radius: 100px;
-            backdrop-filter: blur(20px); font-size: 12px; color: var(--text-secondary);
-            font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
-            transform: translateY(100px); opacity: 0;
-            transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s, box-shadow 0.4s;
-            pointer-events: none;
+        /* ═══ PROCESS ═══ */
+        .process { background: var(--surface); }
+        .process-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 48px;
         }
-        .status-pill.visible { transform: translateY(0); opacity: 1; }
-        .status-pill.event-fire { box-shadow: 0 0 24px rgba(34,197,94,0.25); border-color: rgba(34,197,94,0.5); }
-        .status-pill-dot {
-            width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-            box-shadow: 0 0 8px rgba(34,197,94,0.7); animation: livePulse 2s ease-in-out infinite;
-            flex-shrink: 0;
+        .step {
+            position: relative; padding: 40px 0; border-top: 1px solid var(--border-strong);
+            transition: border-color var(--dur-base);
         }
-        .status-pill strong { color: var(--text-primary); font-weight: 500; }
-        .status-pill .sep { margin: 0 6px; opacity: 0.4; }
-        @media (max-width: 640px) { .status-pill { bottom: 16px; left: 16px; font-size: 11px; padding: 8px 14px; } .status-pill .status-pill-extra { display: none; } }
+        .step:hover { border-color: var(--accent); }
+        .step-num {
+            font-family: var(--display); font-size: 56px; font-weight: 400;
+            color: var(--gold); line-height: 1; margin-bottom: 32px;
+            font-style: italic;
+        }
+        .step h3 { font-size: 22px; margin-bottom: 12px; }
+        .step p { color: var(--text-dim); font-size: 14px; line-height: 1.7; font-weight: 300; }
+        .step-when {
+            margin-top: 24px; font-family: var(--mono); font-size: 10px;
+            letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-mute);
+        }
 
-        /* ═══ HOW WE BUILD THIS ═══ */
-        .how-we-build { padding: 160px 60px; position: relative; background: var(--bg-primary); overflow: hidden; }
-        .how-we-build::before { content: ''; position: absolute; top: 10%; right: -200px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.05), transparent 70%); filter: blur(80px); }
-        .how-we-build::after { content: ''; position: absolute; bottom: 10%; left: -150px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(37,99,235,0.05), transparent 70%); filter: blur(80px); }
-        .build-intro { max-width: 720px; margin: 32px auto 0; font-size: 17px; color: var(--text-secondary); line-height: 1.8; font-weight: 300; text-align: center; }
-        .build-intro em { font-style: italic; color: var(--accent); }
-        .build-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 80px; max-width: 1200px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
-        .build-step {
-            padding: 40px; background: var(--bg-card); border: 1px solid var(--border);
-            position: relative; transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+        /* ═══ ATMOSPHERIC VIDEO BREAK ═══ */
+        .atmos {
+            position: relative; height: 90vh; min-height: 600px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            padding: 80px 48px;
         }
-        .build-step:hover { border-color: rgba(201,168,76,0.3); box-shadow: 0 0 40px rgba(201,168,76,0.08); transform: translateY(-4px); }
-        .build-step-num { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--accent); letter-spacing: 0.3em; margin-bottom: 20px; font-weight: 500; }
-        .build-step-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; margin-bottom: 16px; color: var(--text-primary); line-height: 1.3; }
-        .build-step-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
-        .build-step-stack { display: flex; flex-wrap: wrap; gap: 8px; }
-        .build-step-stack span {
-            font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-            padding: 6px 12px; background: var(--accent-dim);
-            border: 1px solid rgba(201,168,76,0.18); color: var(--accent);
-            border-radius: 100px; font-weight: 500;
+        .atmos-bg, .atmos-bg video {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
         }
-        .build-cta-wrap { text-align: center; margin-top: 72px; position: relative; z-index: 2; }
-        @media (max-width: 768px) {
-            .how-we-build { padding: 120px 24px; }
-            .build-step { padding: 32px; }
+        .atmos-bg { z-index: 0; }
+        .atmos-bg video { filter: saturate(0.6) brightness(0.45); }
+        .atmos-overlay {
+            position: absolute; inset: 0; z-index: 1;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(26,58,168,0.18), transparent 65%),
+                linear-gradient(180deg, rgba(10,18,40,0.65) 0%, rgba(10,18,40,0.88) 100%);
         }
-        .service-card {
-            background: var(--bg-card); border: 1px solid var(--border); padding: 52px 44px;
-            position: relative; overflow: hidden;
-            transition: border-color 0.5s, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+        .atmos-content {
+            position: relative; z-index: 2; text-align: center; max-width: 880px;
         }
-        .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0; transition: opacity 0.4s; }
-        .service-card::after {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201,168,76,0.06), transparent 60%);
-            opacity: 0; transition: opacity 0.4s;
+        .atmos-eyebrow { color: var(--accent); }
+        .atmos h2 {
+            font-size: clamp(40px, 6vw, 84px); margin-bottom: 0;
         }
-        .service-card:hover { border-color: rgba(201,168,76,0.15); }
-        .service-card:hover::before { opacity: 1; }
-        .service-card:hover::after { opacity: 1; }
-        .service-icon { width: 48px; height: 48px; margin-bottom: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-dim); border-radius: 12px; transition: box-shadow 0.4s; }
-        .service-card:hover .service-icon { box-shadow: 0 0 20px rgba(201,168,76,0.2); }
-        .service-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
-        .service-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 500; margin-bottom: 16px; }
-        .service-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
-        .service-link { font-size: 13px; color: var(--accent); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; transition: gap 0.3s; }
-        .service-link:hover { gap: 14px; }
+        .atmos h2 em { display: block; margin-top: 8px; }
 
-        /* ═══ APPROACH ═══ */
-        .approach { background: var(--bg-secondary); }
-        .approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 80px; align-items: center; }
-        .approach-steps { display: flex; flex-direction: column; gap: 40px; }
-        .approach-step {
-            display: flex; gap: 24px; padding: 32px; border: 1px solid var(--border);
-            transition: border-color 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+        /* ═══ RESULTS ═══ */
+        .results { background: var(--bg-soft); }
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-strong); border: 1px solid var(--border-strong); }
+        .case {
+            background: var(--surface); padding: 48px 40px;
+            display: flex; flex-direction: column; gap: 24px;
+            transition: background var(--dur-base), transform var(--dur-base);
         }
-        .approach-step:hover { border-color: rgba(201,168,76,0.2); transform: translateX(8px); box-shadow: -4px 0 20px rgba(201,168,76,0.05); }
-        .step-num { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--accent); opacity: 0.4; line-height: 1; transition: opacity 0.4s; }
-        .approach-step:hover .step-num { opacity: 0.8; }
-        .step-content h4 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
-        .step-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-        .approach-visual { position: relative; height: 500px; overflow: hidden; border-radius: 4px; }
-        .approach-visual video { width: 100%; height: 100%; object-fit: cover; }
-        .approach-visual-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(11,17,32,0.4), rgba(201,168,76,0.08)); }
+        .case:hover { background: #fdfcf8; transform: translateY(-2px); }
+        .case-tag {
+            font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--gold);
+        }
+        .case-metric {
+            font-family: var(--display); font-size: 76px; font-weight: 400;
+            color: var(--accent); line-height: 0.9; letter-spacing: -0.02em;
+        }
+        .case-metric small { font-size: 22px; color: var(--gold); font-style: italic; margin-left: 4px; }
+        .case-desc {
+            color: var(--text); font-size: 16px; line-height: 1.55; font-weight: 400;
+        }
+        .case-footer {
+            margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border);
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--text-mute);
+        }
 
-        /* ═══ TESTIMONIALS ═══ */
-        .testimonial-section { border-top: 1px solid var(--border); position: relative; overflow: hidden; }
-        .testimonial-section::before {
-            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 600px; height: 600px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,168,76,0.03), transparent 70%);
-            pointer-events: none;
+        /* ═══ TESTIMONIAL ═══ */
+        .quote-section {
+            background: var(--bg); padding: 200px 48px; text-align: center;
         }
-        .testimonials-wrapper { max-width: 800px; margin: 80px auto 0; position: relative; }
-        .testimonial-card { text-align: center; }
-        .testimonial-quote { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400; line-height: 1.5; font-style: italic; margin-bottom: 40px; position: relative; }
-        .testimonial-quote::before { content: '\201C'; position: absolute; top: -40px; left: 50%; transform: translateX(-50%); font-size: 100px; color: var(--accent); opacity: 0.2; font-family: 'Playfair Display', serif; line-height: 1; }
-        .testimonial-author { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; }
-        .testimonial-role { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-        .testimonial-dots { display: flex; gap: 12px; justify-content: center; margin-top: 40px; }
-        .testimonial-dots button {
-            width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(201,168,76,0.3);
-            background: transparent; cursor: none; transition: all 0.4s; padding: 0;
+        .quote-mark {
+            font-family: var(--display); font-size: 140px; line-height: 1;
+            color: var(--gold); opacity: 0.55; margin-bottom: -40px;
+            font-style: italic;
         }
-        .testimonial-dots button.active { background: var(--accent); border-color: var(--accent); width: 24px; border-radius: 4px; }
+        blockquote.quote {
+            font-family: var(--display); font-style: italic;
+            font-size: clamp(28px, 3.6vw, 48px); line-height: 1.35;
+            color: var(--text); max-width: 24ch; margin: 0 auto 48px;
+            letter-spacing: -0.01em;
+        }
+        .quote-by {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+            text-transform: uppercase; color: var(--text-mute);
+        }
+        .quote-by strong { color: var(--text); font-weight: 500; }
 
         /* ═══ CTA ═══ */
-        .cta-section { text-align: center; position: relative; overflow: hidden; }
-        .cta-bg-video { position: absolute; inset: 0; z-index: 0; }
-        .cta-bg-video video { width: 100%; height: 100%; object-fit: cover; }
-        .cta-bg-overlay { position: absolute; inset: 0; background: rgba(11,17,32,0.72); z-index: 1; }
-        .cta-section .section-inner { position: relative; z-index: 2; }
-        .cta-section .section-title { max-width: 600px; margin: 0 auto 24px; }
-        .cta-section .section-desc { max-width: 500px; margin: 0 auto 48px; }
+        .cta {
+            position: relative; overflow: hidden;
+            background: var(--bg-soft); padding: 200px 48px;
+        }
+        .cta-mesh {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse at 18% 28%, rgba(26,58,168,0.10), transparent 50%),
+                radial-gradient(ellipse at 82% 72%, rgba(201,162,71,0.12), transparent 55%);
+        }
+        .cta-inner {
+            position: relative; z-index: 1; max-width: 980px; margin: 0 auto; text-align: center;
+        }
+        .cta h2 {
+            font-size: clamp(48px, 7vw, 96px);
+            margin-bottom: 36px;
+        }
+        .cta p {
+            color: var(--text-dim); font-size: 18px; line-height: 1.65; font-weight: 300;
+            max-width: 56ch; margin: 0 auto 56px;
+        }
+        .cta-ctas { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
 
         /* ═══ FOOTER ═══ */
-        footer { padding: 80px 60px 40px; border-top: 1px solid var(--border); }
-        .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
-        .footer-brand { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; margin-bottom: 16px; }
-        .footer-brand span { color: var(--accent); }
-        .footer-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 300px; }
-        .footer-heading { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
-        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-        .footer-links a { font-size: 14px; color: var(--text-secondary); text-decoration: none; transition: color 0.3s, padding-left 0.3s; }
-        .footer-links a:hover { color: var(--text-primary); padding-left: 6px; }
-        .footer-bottom { max-width: 1200px; margin: 60px auto 0; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); }
+        footer {
+            background: #0a1228;            /* deep navy footer for grounding */
+            color: #f6f1e6;
+            padding: 96px 48px 40px;
+            border-top: 1px solid var(--gold-soft);
+        }
+        footer { --text: #f6f1e6; --text-dim: #c8c5b9; --text-mute: rgba(246,241,230,0.45); --border: rgba(246,241,230,0.10); }
+        footer .footer-desc { color: rgba(246,241,230,0.72); }
+        footer .footer-mark { color: #f6f1e6; }
+        footer .footer-col h4 { color: var(--gold); }
+        footer .footer-col a { color: rgba(246,241,230,0.72); }
+        footer .footer-col a:hover { color: var(--gold); }
+        footer .footer-bottom { color: rgba(246,241,230,0.45); border-top-color: rgba(246,241,230,0.10); }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1280px; margin: 0 auto 64px;
+        }
+        .footer-mark { font-family: var(--display); font-size: 32px; font-weight: 400; margin-bottom: 16px; letter-spacing: -0.015em; }
+        .footer-mark em { font-style: italic; color: var(--gold); }
+        .footer-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; font-weight: 300; max-width: 34ch; }
+        .footer-col h4 {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--text-mute); margin-bottom: 24px; font-weight: 500;
+        }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .footer-col a {
+            color: var(--text-dim); font-size: 14px;
+            transition: color var(--dur-fast);
+        }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom {
+            max-width: 1280px; margin: 0 auto; padding-top: 32px;
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--text-mute);
+        }
 
-        .gs-hidden { opacity: 0; }
+        /* ═══ ANIMATION HELPERS ═══ */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+        .reveal.is-in { opacity: 1; transform: none; }
 
         /* ═══ RESPONSIVE ═══ */
-        @media (max-width: 968px) {
-            body { cursor: auto; }
-            nav { padding: 16px 24px; }
-            .nav-links { display: none; }
-            .hero { min-height: 100vh; min-height: 100dvh; padding-top: 70px; }
-            .hero-title { font-size: clamp(32px,8vw,52px); }
-            .hero-sub { font-size: 16px; margin-bottom: 36px; }
-            .hero-content { padding: 0 24px; }
-            section, .video-bg-section { padding: 100px 30px; }
-            .video-bg-section { min-height: 60vh; padding: 120px 30px; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .stat { border-bottom: 1px solid var(--border); }
-            .services-grid { grid-template-columns: 1fr; }
-            .metrics-grid { grid-template-columns: 1fr; gap: 24px; }
-            .metrics-showcase { padding: 100px 30px; }
-            .approach-steps { max-width: 100% !important; }
-            .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
-            .orb { filter: blur(80px); opacity: 0.08; }
-            .horizontal-section { display: none; }
-            .h-panel-inner { grid-template-columns: 1fr; gap: 40px; }
+        @media (max-width: 1024px) {
+            .flow-stage { grid-template-columns: 1fr; gap: 64px; }
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+            .results-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
         }
-        @media (max-width: 600px) {
-            nav { padding: 14px 20px; }
-            .nav-logo { font-size: 18px; }
-            .nav-cta { padding: 8px 18px; font-size: 11px; }
-            .hero { padding-top: 60px; }
-            .hero-badge { font-size: 10px; padding: 6px 16px; margin-bottom: 24px; }
-            .hero-sub { font-size: 15px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .footer-inner { grid-template-columns: 1fr; }
-            .hero-ctas { flex-direction: column; align-items: center; }
-            .btn-primary, .btn-secondary { padding: 14px 32px; font-size: 13px; width: 100%; text-align: center; }
-            .footer-bottom { flex-direction: column; gap: 8px; }
-            .marquee-section { display: none; }
-            .video-bg-title { font-size: clamp(26px,6vw,42px); }
-            .video-bg-section { min-height: 50vh; padding: 80px 24px; }
+        @media (max-width: 720px) {
+            nav { padding: 16px 24px; }
+            nav.scrolled { padding: 12px 24px; }
+            .nav-links, .nav-cta { display: none; }
+            .nav-burger { display: flex; }
+            section { padding: 96px 24px; }
+            .hero { padding: 96px 24px 64px; }
+            .hero-foot { left: 24px; right: 24px; bottom: 24px; }
+            .hero-meta { display: none; }
+            h1.hero-title { font-size: clamp(40px, 11vw, 68px); }
+            .cap-grid { grid-template-columns: 1fr; }
+            .cap-card { padding: 40px 28px; }
+            .process-grid { grid-template-columns: 1fr; }
+            .flow-canvas { min-height: 480px; }
+            .quote-section, .cta { padding: 120px 24px; }
+            footer { padding: 64px 24px 32px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .reveal { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body>
 
-<!-- PRELOADER -->
-<div class="preloader">
-    <div class="preloader-logo">Height <span>Consulting</span></div>
-    <div class="preloader-bar-track"><div class="preloader-bar"></div></div>
-    <div class="preloader-counter">0</div>
+<!-- ═══ PRELOADER ═══ -->
+<div class="preloader" id="preloader">
+    <div class="preloader-mark">Height <em>Consulting</em></div>
+    <div class="preloader-bar-track"><div class="preloader-bar" id="preloader-bar"></div></div>
+    <div class="preloader-pct" id="preloader-pct">0%</div>
 </div>
 
-<div class="noise-overlay"></div>
-<div class="scroll-progress"></div>
+<!-- ═══ OVERLAYS ═══ -->
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursor-dot"></div>
 
-<!-- LIVE STATUS PILL -->
-<div class="status-pill" aria-live="polite">
-    <span class="status-pill-dot"></span>
-    <span><strong id="pill-systems">12</strong> systems live</span>
-    <span class="sep status-pill-extra">·</span>
-    <span class="status-pill-extra"><strong id="pill-events">0</strong> events today</span>
-    <span class="sep">·</span>
-    <span><span id="pill-time">3s</span> ago</span>
-</div>
-<div class="cursor-ring"></div>
-<div class="cursor-dot"></div>
-
-<!-- NAV -->
-<nav>
-    <a href="#" class="nav-logo">Height <span>Consulting</span></a>
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+    <a href="#" class="nav-mark">Height <em>Consulting</em></a>
     <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#how-we-build">The Build</a></li>
-        <li><a href="#approach">Approach</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#systems">Systems</a></li>
+        <li><a href="#process">Process</a></li>
         <li><a href="#results">Results</a></li>
-        <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-cta magnetic-btn"><i>Get Started</i></a>
+    <a href="#contact" class="nav-cta"><span>Start a call</span></a>
+    <button class="nav-burger" aria-label="menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- HERO with Particle Canvas + Gradient Orbs -->
+<!-- ═══ HERO ═══ -->
 <section class="hero">
-    <div class="hero-video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="highrise-office.mp4" type="video/mp4">
+    <div class="hero-video">
+        <video autoplay muted loop playsinline preload="auto" poster="">
+            <source src="hero-automation.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="hero-video-overlay"></div>
+    <div class="hero-mesh"></div>
     <canvas id="particle-canvas"></canvas>
-    <div class="hero-gradient-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
     <div class="hero-content">
-        <div class="hero-badge">AI-Powered B2B Growth</div>
-        <h1 class="hero-title" data-split>Where Intelligence<br>Meets <em>Influence</em></h1>
-        <p class="hero-sub">We engineer AI-driven outreach systems that connect your business with decision-makers who matter. Precision targeting. Measurable results. No guesswork.</p>
+        <div class="hero-eyebrow">
+            <span>AI Automation Studio</span><span class="pulse"></span><span style="letter-spacing:0.18em;color:var(--text-mute)">Accepting Q2 engagements</span>
+        </div>
+        <h1 class="hero-title" data-split>
+            <span class="line"><span>Automation systems,</span></span>
+            <span class="line"><span>engineered for <em>velocity</em>.</span></span>
+        </h1>
+        <p class="hero-sub">We design and ship workflow automations, custom AI agents, and integration stacks that compress weeks of manual ops into minutes — for B2B teams that move at the speed of revenue.</p>
         <div class="hero-ctas">
-            <a href="#contact" class="btn-primary magnetic-btn">Book a Strategy Call</a>
-            <a href="#services" class="btn-secondary magnetic-btn">Explore Solutions</a>
+            <a href="#contact" class="btn btn-primary"><span>Start a discovery call</span><span class="arrow"></span></a>
+            <a href="#systems" class="btn btn-ghost"><span>See the work</span><span class="arrow"></span></a>
         </div>
     </div>
-    <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+    <div class="hero-foot">
+        <div class="hero-scroll-cue"><span>Scroll</span><div class="hero-scroll-line"></div></div>
+        <div class="hero-meta">
+            <strong>60+ automations shipped</strong><br>
+            <span>Founded 2024 &middot; Remote-first</span>
+        </div>
+    </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-section">
-    <div class="marquee-track">
-        <span class="marquee-item">LinkedIn Automation</span><span class="marquee-dot"></span>
-        <span class="marquee-item">AI Chatbots</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Premium Websites</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Voice AI</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Workflow Intelligence</span><span class="marquee-dot"></span>
-        <span class="marquee-item">B2B Growth</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Data-Driven Strategy</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Conversion Optimization</span><span class="marquee-dot"></span>
-        <span class="marquee-item">LinkedIn Automation</span><span class="marquee-dot"></span>
-        <span class="marquee-item">AI Chatbots</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Premium Websites</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Voice AI</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Workflow Intelligence</span><span class="marquee-dot"></span>
-        <span class="marquee-item">B2B Growth</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Data-Driven Strategy</span><span class="marquee-dot"></span>
-        <span class="marquee-item">Conversion Optimization</span><span class="marquee-dot"></span>
+<!-- ═══ STACK MARQUEE ═══ -->
+<div class="stack">
+    <div class="stack-inner" id="stack-track">
+        <span class="stack-label">— Stacks we deploy —</span>
+        <span class="stack-item">n8n</span><span class="stack-dot"></span>
+        <span class="stack-item">Make.com</span><span class="stack-dot"></span>
+        <span class="stack-item">Zapier</span><span class="stack-dot"></span>
+        <span class="stack-item">OpenAI</span><span class="stack-dot"></span>
+        <span class="stack-item">Anthropic</span><span class="stack-dot"></span>
+        <span class="stack-item">GoHighLevel</span><span class="stack-dot"></span>
+        <span class="stack-item">Airtable</span><span class="stack-dot"></span>
+        <span class="stack-item">Twilio</span><span class="stack-dot"></span>
+        <span class="stack-item">ElevenLabs</span><span class="stack-dot"></span>
+        <span class="stack-item">Cal.com</span><span class="stack-dot"></span>
+        <span class="stack-item">Slack</span><span class="stack-dot"></span>
+        <span class="stack-item">Stripe</span><span class="stack-dot"></span>
+        <!-- duplicate for seamless loop -->
+        <span class="stack-label">— Stacks we deploy —</span>
+        <span class="stack-item">n8n</span><span class="stack-dot"></span>
+        <span class="stack-item">Make.com</span><span class="stack-dot"></span>
+        <span class="stack-item">Zapier</span><span class="stack-dot"></span>
+        <span class="stack-item">OpenAI</span><span class="stack-dot"></span>
+        <span class="stack-item">Anthropic</span><span class="stack-dot"></span>
+        <span class="stack-item">GoHighLevel</span><span class="stack-dot"></span>
+        <span class="stack-item">Airtable</span><span class="stack-dot"></span>
+        <span class="stack-item">Twilio</span><span class="stack-dot"></span>
+        <span class="stack-item">ElevenLabs</span><span class="stack-dot"></span>
+        <span class="stack-item">Cal.com</span><span class="stack-dot"></span>
+        <span class="stack-item">Slack</span><span class="stack-dot"></span>
+        <span class="stack-item">Stripe</span><span class="stack-dot"></span>
     </div>
 </div>
 
-<!-- ANIMATED DIVIDER -->
-<div class="section-divider"></div>
-
-<!-- FLOATING METRICS SHOWCASE -->
-<section class="metrics-showcase">
-    <div class="metrics-inner">
-        <div class="metrics-header">
-            <div class="section-label gs-hidden">What We Deliver</div>
-            <h2 class="section-title gs-hidden" style="max-width:700px;margin:0 auto 16px;" data-split-reveal>Where the world's top firms come to <em>scale</em></h2>
-            <p class="section-desc gs-hidden" style="max-width:560px;margin:0 auto;">Height Consulting operates at the intersection of AI intelligence and executive-level strategy.</p>
+<!-- ═══ CAPABILITIES ═══ -->
+<section class="capabilities" id="capabilities">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="eyebrow">What we build</div>
+            <h2>Six core systems. <em>One operating layer</em>.</h2>
+            <p class="section-sub">Every engagement starts with a system audit and ends with production automations your team actually trusts. No shelfware. No demos that don't ship.</p>
         </div>
-        <div class="metrics-grid">
-            <div class="metric-card gs-hidden" style="--fill-width:94%;">
-                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
-                <div class="metric-card-value">40+</div>
-                <div class="metric-card-label">Automations Shipped</div>
-                <div class="metric-card-bar"><div class="metric-card-fill"></div></div>
+        <div class="cap-grid">
+            <div class="cap-card reveal">
+                <div class="cap-num">01<span style="color:var(--text-mute)">— Workflow Automation</span></div>
+                <h3>Multi-step processes, wired across your stack</h3>
+                <p>n8n, Make, and Zapier orchestrations that handle the boring 80% — lead routing, billing sync, status updates, post-sale handoffs — with error handling that doesn't break at 2am.</p>
+                <div class="cap-stack">
+                    <span class="cap-tag">n8n</span><span class="cap-tag">Make</span><span class="cap-tag">Zapier</span><span class="cap-tag">Webhooks</span>
+                </div>
             </div>
-            <div class="metric-card gs-hidden" style="--fill-width:87%;">
-                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                <div class="metric-card-value">15+ hrs</div>
-                <div class="metric-card-label">Saved Per Client, Per Week</div>
-                <div class="metric-card-bar"><div class="metric-card-fill"></div></div>
+            <div class="cap-card reveal">
+                <div class="cap-num">02<span style="color:var(--text-mute)">— Custom AI Agents</span></div>
+                <h3>Agents that read your data and ship work</h3>
+                <p>OpenAI and Anthropic agents wired to your CRM, docs, and tools. Not chatbots — operators. Triage, draft, classify, route, summarize. They do the job, you approve the output.</p>
+                <div class="cap-stack">
+                    <span class="cap-tag">OpenAI</span><span class="cap-tag">Anthropic</span><span class="cap-tag">LangChain</span><span class="cap-tag">RAG</span>
+                </div>
             </div>
-            <div class="metric-card gs-hidden" style="--fill-width:92%;">
-                <div class="metric-card-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-                <div class="metric-card-value">24/7</div>
-                <div class="metric-card-label">AI Systems Running Live</div>
-                <div class="metric-card-bar"><div class="metric-card-fill"></div></div>
+            <div class="cap-card reveal">
+                <div class="cap-num">03<span style="color:var(--text-mute)">— CRM + Sales Stack</span></div>
+                <h3>Pipeline plumbing, no manual fixes</h3>
+                <p>GoHighLevel, HubSpot, Salesforce, Monday — wired to your lead sources, billing, and dispatch with audit trails. Every record reconciled. Every handoff logged.</p>
+                <div class="cap-stack">
+                    <span class="cap-tag">GHL</span><span class="cap-tag">HubSpot</span><span class="cap-tag">Salesforce</span><span class="cap-tag">Monday</span>
+                </div>
+            </div>
+            <div class="cap-card reveal">
+                <div class="cap-num">04<span style="color:var(--text-mute)">— Voice + SMS Systems</span></div>
+                <h3>After-hours coverage that books meetings</h3>
+                <p>Twilio + ElevenLabs voice agents and SMS funnels that qualify inbound, schedule discovery calls, and route emergencies — while your team sleeps.</p>
+                <div class="cap-stack">
+                    <span class="cap-tag">Twilio</span><span class="cap-tag">ElevenLabs</span><span class="cap-tag">Vapi</span><span class="cap-tag">Retell</span>
+                </div>
+            </div>
+            <div class="cap-card reveal">
+                <div class="cap-num">05<span style="color:var(--text-mute)">— Data + Dashboards</span></div>
+                <h3>One source of truth, exportable</h3>
+                <p>Airtable, Postgres, BigQuery — clean schemas, scheduled syncs, and reporting your CFO can audit. Numbers leadership trusts, not spreadsheet roulette.</p>
+                <div class="cap-stack">
+                    <span class="cap-tag">Airtable</span><span class="cap-tag">Postgres</span><span class="cap-tag">BigQuery</span><span class="cap-tag">Metabase</span>
+                </div>
+            </div>
+            <div class="cap-card reveal">
+                <div class="cap-num">06<span style="color:var(--text-mute)">— Web + Booking</span></div>
+                <h3>Sites that convert, scheduling that closes</h3>
+                <p>Premium static sites with Cal.com / Calendly funnels. Fast to load, designed to convert, instrumented end-to-end so you see exactly where each lead came from.</p>
+                <div class="cap-stack">
+                    <span class="cap-tag">Static</span><span class="cap-tag">Cal.com</span><span class="cap-tag">Calendly</span><span class="cap-tag">Netlify</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- STATS -->
-<div class="stats">
-    <div class="stats-grid">
-        <div class="stat gs-hidden"><div class="stat-number" data-target="40">0</div><div class="stat-label">Automations Shipped</div></div>
-        <div class="stat gs-hidden"><div class="stat-number" data-target="15">0</div><div class="stat-label">Hrs / Week Saved per Client</div></div>
-        <div class="stat gs-hidden"><div class="stat-number" data-target="12">0</div><div class="stat-label">Live Systems in Production</div></div>
-        <div class="stat gs-hidden"><div class="stat-number">24/7</div><div class="stat-label">Always On</div></div>
-    </div>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- HORIZONTAL SCROLL SHOWCASE -->
-<div class="horizontal-section">
-    <div class="horizontal-wrapper">
-        <div class="h-panel" style="background: var(--bg-primary);">
-            <div class="h-panel-number">01</div>
-            <div class="h-panel-inner">
-                <div>
-                    <div class="h-panel-label gs-hidden">Precision Targeting</div>
-                    <h3 class="h-panel-title gs-hidden">We find the <em>exact</em> people<br>who need your solution</h3>
-                    <p class="h-panel-desc gs-hidden">Our AI scans millions of data points to identify decision-makers actively seeking solutions like yours. No spray-and-pray. Every touchpoint is strategic.</p>
-                    <ul class="h-panel-features gs-hidden">
-                        <li>ICP identification with 97% accuracy</li>
-                        <li>Intent signal monitoring across platforms</li>
-                        <li>Automated multi-channel sequencing</li>
-                        <li>Real-time engagement scoring</li>
-                    </ul>
-                </div>
-                <div class="abstract-visual">
-                    <div class="av-layer av-1"></div>
-                    <div class="av-layer av-2"></div>
-                    <div class="av-layer av-3"></div>
-                    <div class="av-grid"></div>
-                    <div class="av-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
-                    <div class="av-dots">
-                        <div class="av-dot" style="top:20%;left:25%;animation-delay:0s;"></div>
-                        <div class="av-dot" style="top:60%;left:75%;animation-delay:1s;"></div>
-                        <div class="av-dot" style="top:80%;left:30%;animation-delay:2s;"></div>
-                        <div class="av-dot" style="top:35%;left:85%;animation-delay:0.5s;"></div>
+<!-- ═══ LIVE FLOW VISUALIZATION ═══ -->
+<section class="flow" id="systems">
+    <div class="container">
+        <div class="flow-stage">
+            <div class="flow-copy reveal">
+                <div class="eyebrow">A typical engagement</div>
+                <h2>One workflow. <em>Six handoffs</em>. Zero touch.</h2>
+                <p>Here's what a single automation looks like in production: a lead lands, an AI agent enriches it, your CRM updates, your team gets notified, and a follow-up is scheduled — in under 90 seconds. Live, every minute, somewhere on our infrastructure right now.</p>
+                <div class="flow-metrics">
+                    <div class="flow-metric">
+                        <div class="v">180<small>h/mo</small></div>
+                        <div class="l">Avg client time recovered</div>
+                    </div>
+                    <div class="flow-metric">
+                        <div class="v">&lt;5<small>days</small></div>
+                        <div class="l">First flow in production</div>
+                    </div>
+                    <div class="flow-metric">
+                        <div class="v">99.4<small>%</small></div>
+                        <div class="l">Workflow success rate</div>
+                    </div>
+                    <div class="flow-metric">
+                        <div class="v">8<small>fig</small></div>
+                        <div class="l">Pipelines automated</div>
                     </div>
                 </div>
             </div>
-            <div class="h-scroll-progress"><div class="h-scroll-fill"></div></div>
-            <div class="h-scroll-counter">01 / 03</div>
-        </div>
-        <div class="h-panel" style="background: var(--bg-secondary);">
-            <div class="h-panel-number">02</div>
-            <div class="h-panel-inner">
-                <div>
-                    <div class="h-panel-label gs-hidden">Intelligent Systems</div>
-                    <h3 class="h-panel-title gs-hidden">Automation that thinks<br>like your <em>best closer</em></h3>
-                    <p class="h-panel-desc gs-hidden">Our AI chatbots and voice agents learn your business language, qualify leads in real-time, and book meetings while you sleep. They never take a day off.</p>
-                    <ul class="h-panel-features gs-hidden">
-                        <li>Natural language understanding</li>
-                        <li>Custom-trained on your playbook</li>
-                        <li>Seamless CRM integration</li>
-                        <li>24/7 autonomous operation</li>
-                    </ul>
-                </div>
-                <div class="abstract-visual">
-                    <div class="av-layer av-1" style="background:rgba(201,168,76,0.25);"></div>
-                    <div class="av-layer av-2" style="background:rgba(37,99,235,0.3);"></div>
-                    <div class="av-layer av-3" style="background:rgba(201,168,76,0.15);"></div>
-                    <div class="av-grid"></div>
-                    <div class="av-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-                    <div class="av-dots">
-                        <div class="av-dot" style="top:15%;left:70%;animation-delay:0.3s;"></div>
-                        <div class="av-dot" style="top:50%;left:20%;animation-delay:1.2s;"></div>
-                        <div class="av-dot" style="top:75%;left:60%;animation-delay:2.1s;"></div>
-                        <div class="av-dot" style="top:30%;left:40%;animation-delay:0.8s;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="h-scroll-progress"><div class="h-scroll-fill"></div></div>
-            <div class="h-scroll-counter">02 / 03</div>
-        </div>
-        <div class="h-panel" style="background: var(--bg-primary);">
-            <div class="h-panel-number">03</div>
-            <div class="h-panel-inner">
-                <div>
-                    <div class="h-panel-label gs-hidden">Measurable Growth</div>
-                    <h3 class="h-panel-title gs-hidden">Results you can see.<br><em>ROI</em> you can prove.</h3>
-                    <p class="h-panel-desc gs-hidden">Every system we build connects to a real-time analytics dashboard. See exactly which channels, messages, and touchpoints drive revenue. No vanity metrics.</p>
-                    <ul class="h-panel-features gs-hidden">
-                        <li>Revenue attribution modeling</li>
-                        <li>Pipeline velocity tracking</li>
-                        <li>A/B testing on messaging</li>
-                        <li>Monthly optimization reports</li>
-                    </ul>
-                </div>
-                <div class="abstract-visual">
-                    <div class="av-layer av-1" style="background:rgba(37,99,235,0.35);"></div>
-                    <div class="av-layer av-2" style="background:rgba(201,168,76,0.2);top:-30px;right:-60px;"></div>
-                    <div class="av-layer av-3" style="background:rgba(37,99,235,0.15);"></div>
-                    <div class="av-grid"></div>
-                    <div class="av-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-                    <div class="av-dots">
-                        <div class="av-dot" style="top:25%;left:15%;animation-delay:0.6s;"></div>
-                        <div class="av-dot" style="top:45%;left:80%;animation-delay:1.5s;"></div>
-                        <div class="av-dot" style="top:70%;left:45%;animation-delay:0.2s;"></div>
-                        <div class="av-dot" style="top:85%;left:70%;animation-delay:1.8s;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="h-scroll-progress"><div class="h-scroll-fill"></div></div>
-            <div class="h-scroll-counter">03 / 03</div>
-        </div>
-    </div>
-</div>
-
-<div class="section-divider"></div>
-
-<!-- SERVICES -->
-<section id="services">
-    <div class="section-inner">
-        <div class="section-label gs-hidden">What We Build</div>
-        <h2 class="section-title gs-hidden" data-split-reveal>Integrated AI systems that compound your growth</h2>
-        <p class="section-desc gs-hidden">Each solution works independently. Together, they create an intelligent growth engine that learns, adapts, and scales with your business.</p>
-        <div class="services-grid">
-            <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
-                <h3 class="service-title">Workflow Automation</h3>
-                <p class="service-desc">End-to-end business processes orchestrated in n8n and Make.com. Data flows across your CRM, tools, and custom logic without humans babysitting — built to handle edge cases, surface errors, and scale with you.</p>
-                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
-            </div>
-            <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-                <h3 class="service-title">LinkedIn Outreach</h3>
-                <p class="service-desc">Sales Navigator plus enrichment plus multi-step sequences running in n8n. Reply detection hands conversations to AI for qualification — your reps only see meeting-ready prospects. Every touchpoint tracked and attributed.</p>
-                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
-            </div>
-            <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-                <h3 class="service-title">AI Chatbots</h3>
-                <p class="service-desc">Conversational agents trained on your business, embedded on your site or inside Slack, Teams, or Telegram. Qualify leads, answer FAQs, and book meetings 24/7. Retrieval-augmented so answers stay accurate as the business evolves.</p>
-                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
-            </div>
-            <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-                <h3 class="service-title">Intelligent Phone Systems</h3>
-                <p class="service-desc">AI voice agents (Twilio plus LLM) that handle inbound calls, qualify opportunities, and route with the nuance of your best rep. Warm-transfer to a human when it matters. Transcript plus summary lands in your CRM automatically.</p>
-                <a href="#contact" class="service-link">Start a Build <span>&rarr;</span></a>
-            </div>
-            <div class="service-card gs-hidden">
-                <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-                <h3 class="service-title">Premium Websites</h3>
-                <p class="service-desc">Cinematic, conversion-focused sites built the way you see this one. AI-generated video backgrounds, GSAP animation layer, vanilla-JS performance. Deployed to Netlify or Vercel with auto-sync from GitHub. You're looking at one.</p>
-                <a href="#how-we-build" class="service-link">See the Build <span>&rarr;</span></a>
+            <div class="flow-canvas">
+                <div class="flow-status"><span class="pulse"></span>Live</div>
+                <div class="flow-line fl-1" data-line="1"></div>
+                <div class="flow-line fl-2" data-line="2"></div>
+                <div class="flow-line fl-3" data-line="3"></div>
+                <div class="flow-line fl-4" data-line="4"></div>
+                <div class="flow-line fl-5" data-line="5"></div>
+                <div class="flow-line fl-6" data-line="6"></div>
+                <div class="flow-node fn-1" data-step="1"><span class="dot"></span>Webhook · New Lead</div>
+                <div class="flow-node fn-2" data-step="2"><span class="dot"></span>AI · Enrich + Score</div>
+                <div class="flow-node fn-3" data-step="3"><span class="dot"></span>CRM · Upsert Contact</div>
+                <div class="flow-node fn-4" data-step="4"><span class="dot"></span>Slack · Notify Owner</div>
+                <div class="flow-node fn-5" data-step="5"><span class="dot"></span>SMS · Send Sequence</div>
+                <div class="flow-node fn-6" data-step="6"><span class="dot"></span>Cal · Book Discovery</div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- LIVE AUTOMATION FLOW -->
-<section id="flow" class="flow-section">
-    <div class="section-inner" style="text-align: center;">
-        <div class="section-label gs-hidden">Live Automation</div>
-        <h2 class="section-title gs-hidden" style="max-width: 780px; margin: 0 auto;" data-split-reveal>What a running system <em>looks like</em></h2>
-        <p class="build-intro gs-hidden">This is one of our n8n workflows — an inbound lead hits a webhook, gets enriched, qualified by AI, and routed to the right tool. Watching it run makes the abstract tangible.</p>
-
-        <div class="flow-stage gs-hidden">
-            <div class="flow-header">
-                <div class="flow-header-left">
-                    <span class="flow-live-dot"></span>
-                    <span class="flow-header-title">RUNNING<strong>Inbound Lead Workflow</strong></span>
-                </div>
-                <div class="flow-counter">
-                    <strong id="flow-events-today">0</strong>events processed today
-                    <span class="sep">·</span>
-                    avg latency <strong id="flow-latency">142</strong>ms
-                </div>
+<!-- ═══ PROCESS ═══ -->
+<section class="process" id="process">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="eyebrow">How we build</div>
+            <h2>Four phases. <em>No surprises</em>.</h2>
+            <p class="section-sub">Every engagement runs the same protocol — so you know exactly when you'll see value, what it'll cost, and what ships in each phase.</p>
+        </div>
+        <div class="process-grid">
+            <div class="step reveal">
+                <div class="step-num">01</div>
+                <h3>Audit</h3>
+                <p>We map your current systems end-to-end, find the leaks, and score the highest-ROI plays. You leave with a written report whether we work together or not.</p>
+                <div class="step-when">Week 1—2</div>
             </div>
-
-            <div class="flow-svg-wrap">
-                <svg class="flow-svg" viewBox="0 0 1160 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                    <!-- Connection lines -->
-                    <path class="flow-line" d="M 140 160 L 310 160" id="flow-path-1"/>
-                    <path class="flow-line" d="M 450 160 L 620 160" id="flow-path-2"/>
-                    <path class="flow-line flow-line-branch" d="M 760 160 Q 820 160 840 100 Q 860 40 1020 40" id="flow-path-3"/>
-                    <path class="flow-line flow-line-branch" d="M 760 160 L 1020 160" id="flow-path-4"/>
-                    <path class="flow-line flow-line-branch" d="M 760 160 Q 820 160 840 220 Q 860 280 1020 280" id="flow-path-5"/>
-
-                    <!-- Node 1: Webhook -->
-                    <g class="flow-node" data-node="webhook" transform="translate(20,110)">
-                        <rect x="0" y="0" width="120" height="100" rx="6"/>
-                        <g class="flow-node-icon" transform="translate(30,24)">
-                            <polyline points="9 18 15 12 9 6" fill="none"/>
-                            <rect x="0" y="0" width="24" height="24" rx="4" fill="none" stroke="none"/>
-                        </g>
-                        <text x="60" y="72" class="flow-node-sub">Step 01</text>
-                        <text x="60" y="90">Webhook</text>
-                    </g>
-
-                    <!-- Node 2: Enrich -->
-                    <g class="flow-node" data-node="enrich" transform="translate(310,110)">
-                        <rect x="0" y="0" width="140" height="100" rx="6"/>
-                        <g class="flow-node-icon" transform="translate(36,24)">
-                            <circle cx="14" cy="14" r="12" fill="none"/>
-                            <path d="M 14 6 L 14 22 M 6 14 L 22 14" fill="none"/>
-                        </g>
-                        <text x="70" y="72" class="flow-node-sub">Step 02</text>
-                        <text x="70" y="90">Enrich + Dedupe</text>
-                    </g>
-
-                    <!-- Node 3: AI Qualify -->
-                    <g class="flow-node" data-node="ai" transform="translate(620,110)">
-                        <rect x="0" y="0" width="140" height="100" rx="6"/>
-                        <g class="flow-node-icon" transform="translate(38,22)">
-                            <path d="M 12 2 L 15 9 L 22 10 L 17 15 L 18 22 L 12 19 L 6 22 L 7 15 L 2 10 L 9 9 Z" fill="none"/>
-                        </g>
-                        <text x="70" y="72" class="flow-node-sub">Step 03</text>
-                        <text x="70" y="90">AI Qualify</text>
-                    </g>
-
-                    <!-- Node 4a: Slack (top branch) -->
-                    <g class="flow-node branch" data-node="slack" transform="translate(1020,10)">
-                        <rect x="0" y="0" width="120" height="60" rx="6"/>
-                        <text x="60" y="26" class="flow-node-sub">HOT LEAD</text>
-                        <text x="60" y="44">Slack Alert</text>
-                    </g>
-
-                    <!-- Node 4b: CRM (middle branch) -->
-                    <g class="flow-node branch" data-node="crm" transform="translate(1020,130)">
-                        <rect x="0" y="0" width="120" height="60" rx="6"/>
-                        <text x="60" y="26" class="flow-node-sub">QUALIFIED</text>
-                        <text x="60" y="44">CRM Sync</text>
-                    </g>
-
-                    <!-- Node 4c: Email (bottom branch) -->
-                    <g class="flow-node branch" data-node="email" transform="translate(1020,250)">
-                        <rect x="0" y="0" width="120" height="60" rx="6"/>
-                        <text x="60" y="26" class="flow-node-sub">NURTURE</text>
-                        <text x="60" y="44">Email Sequence</text>
-                    </g>
-
-                    <!-- Moving token -->
-                    <circle id="flow-token" r="5" fill="#c9a84c" opacity="0" filter="drop-shadow(0 0 6px rgba(201,168,76,0.9))"/>
-                </svg>
+            <div class="step reveal">
+                <div class="step-num">02</div>
+                <h3>Design</h3>
+                <p>Visual flowcharts of every workflow before code is written. You approve the architecture, the integrations, and the error-handling strategy.</p>
+                <div class="step-when">Week 2—3</div>
             </div>
-
-            <div class="flow-event-log" id="flow-event-log" aria-live="polite">
-                <!-- events injected by JS -->
+            <div class="step reveal">
+                <div class="step-num">03</div>
+                <h3>Build</h3>
+                <p>Production-ready automations, fully documented, error-handled, and logged. We ship one flow at a time so you see compounding wins, not a big-bang launch.</p>
+                <div class="step-when">Week 3—8</div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">04</div>
+                <h3>Iterate</h3>
+                <p>Monthly tuning, new automations as the business grows, and a Slack channel where your team flags ideas. The system gets stronger every month.</p>
+                <div class="step-when">Ongoing</div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- HOW WE BUILD SITES LIKE THIS -->
-<section id="how-we-build" class="how-we-build">
-    <div class="section-inner" style="text-align: center;">
-        <div class="section-label gs-hidden">How We Build Sites Like This</div>
-        <h2 class="section-title gs-hidden" style="max-width: 760px; margin: 0 auto;" data-split-reveal>The stack behind <em>this</em> site</h2>
-        <p class="build-intro gs-hidden">You're looking at one. No WordPress, no page-builder, no stock footage. Here's the same four-step stack we use on every <em>Premium Websites</em> engagement.</p>
-        <div class="build-stack-grid">
-            <div class="build-step gs-hidden">
-                <div class="build-step-num">STEP 01</div>
-                <h4 class="build-step-title">AI-generated hero video</h4>
-                <p class="build-step-desc">Reference image generated with NanoBanana 2, then turned into a looping video in Seedance 2.0. First-frame = last-frame conditioning gives a seamless loop with no visible cut — no location shoot, no stock footage, no production budget.</p>
-                <div class="build-step-stack"><span>Kie.ai</span><span>Seedance 2.0</span><span>NanoBanana 2</span></div>
-            </div>
-            <div class="build-step gs-hidden">
-                <div class="build-step-num">STEP 02</div>
-                <h4 class="build-step-title">Cinematic animation layer</h4>
-                <p class="build-step-desc">GSAP and ScrollTrigger drive every reveal, transform, and scroll-scrub. Lenis handles smooth scroll. Canvas particles, noise overlay, and custom cursor add depth without weight. 60fps target, GPU-accelerated throughout.</p>
-                <div class="build-step-stack"><span>GSAP</span><span>ScrollTrigger</span><span>Lenis</span><span>Canvas</span></div>
-            </div>
-            <div class="build-step gs-hidden">
-                <div class="build-step-num">STEP 03</div>
-                <h4 class="build-step-title">Built in Claude Code</h4>
-                <p class="build-step-desc">Vanilla HTML, CSS, and JavaScript — no framework overhead, no runtime cost. Architected in plan mode with the frontend-design plugin, then iterated against reference screenshots until the feel was right. No CMS. No bloat.</p>
-                <div class="build-step-stack"><span>Claude Code</span><span>Vanilla JS</span><span>HTML + CSS</span></div>
-            </div>
-            <div class="build-step gs-hidden">
-                <div class="build-step-num">STEP 04</div>
-                <h4 class="build-step-title">Shipped to production</h4>
-                <p class="build-step-desc">GitHub to Netlify (or Vercel) auto-deploy. Push a change, and it's live globally in 30 to 60 seconds. Custom domain, global CDN, HTTPS, and zero ops from day one. Updates feel instant.</p>
-                <div class="build-step-stack"><span>GitHub</span><span>Netlify</span><span>Vercel</span></div>
-            </div>
-        </div>
-        <div class="build-cta-wrap gs-hidden">
-            <a href="#contact" class="btn-primary magnetic-btn">Build one for your brand</a>
-        </div>
+<!-- ═══ ATMOSPHERIC BREAK ═══ -->
+<section class="atmos">
+    <div class="atmos-bg"><video autoplay muted loop playsinline preload="auto"><source src="atmos-systems.mp4" type="video/mp4"></video></div>
+    <div class="atmos-overlay"></div>
+    <div class="atmos-content">
+        <div class="eyebrow atmos-eyebrow">The compounding effect</div>
+        <h2>Every automation we ship pays for the next.<br><em>Compound the system. Compound the company.</em></h2>
     </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- VIDEO BG 2: Luxury Yacht -->
-<section class="video-bg-section">
-    <div class="video-bg-layer">
-        <video autoplay muted loop playsinline><source src="luxury-yacht.mp4" type="video/mp4"></video>
-    </div>
-    <div class="video-bg-overlay"></div>
-    <div class="video-bg-content">
-        <div class="video-bg-label gs-hidden">The Height Standard</div>
-        <h2 class="video-bg-title gs-hidden">Your competition is still<br>doing it <em>manually</em></h2>
-        <p class="video-bg-desc gs-hidden">While they're sending cold emails one by one, your AI systems are running 24/7 — qualifying leads, booking meetings, and closing gaps in your pipeline automatically.</p>
-        <div class="video-bg-tagline gs-hidden">Automate. Dominate. Scale.</div>
-    </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="results" class="testimonial-section">
-    <div class="section-inner" style="text-align: center;">
-        <div class="section-label gs-hidden">Client Results</div>
-        <h2 class="section-title gs-hidden" style="max-width: 600px; margin: 0 auto 0;" data-split-reveal>What our partners have to say</h2>
-        <div class="testimonials-wrapper">
-            <div class="testimonial-card gs-hidden" data-testimonial="0">
-                <p class="testimonial-quote">Height rebuilt the ops stack we'd been duct-taping together for two years. The automations just run — we stopped thinking about the parts of the business we used to fight every day.</p>
-                <div class="testimonial-author">Founder</div>
-                <div class="testimonial-role">Short-term rental operator &middot; Gulf Coast</div>
+<!-- ═══ RESULTS ═══ -->
+<section class="results" id="results">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="eyebrow">Results in production</div>
+            <h2>What clients keep <em>after we leave</em>.</h2>
+            <p class="section-sub">Three recent engagements. Numbers from live systems, not pitch decks.</p>
+        </div>
+        <div class="results-grid">
+            <div class="case reveal">
+                <div class="case-tag">Property Management</div>
+                <div class="case-metric">22<small>h/wk</small></div>
+                <div class="case-desc">14 manual handoffs between lease, dispatch, and accounting collapsed into a single automated pipeline.</div>
+                <div class="case-footer">8-week engagement · n8n + Airtable + GHL</div>
             </div>
-            <div class="testimonial-card gs-hidden" data-testimonial="1" style="display:none;">
-                <p class="testimonial-quote">We had an AI agent live across three of our businesses in under a month. It answers the questions we used to spend hours on every week. The difference in our calendar has been the real proof.</p>
-                <div class="testimonial-author">Owner</div>
-                <div class="testimonial-role">Multi-location service business &middot; Houston, TX</div>
+            <div class="case reveal">
+                <div class="case-tag">B2B SaaS</div>
+                <div class="case-metric">2.1<small>×</small></div>
+                <div class="case-desc">AI-driven outbound enrichment + qualified meetings doubled in 8 weeks. CRM data quality went from 38% to 94%.</div>
+                <div class="case-footer">10-week engagement · Make + OpenAI + HubSpot</div>
             </div>
-            <div class="testimonial-card gs-hidden" data-testimonial="2" style="display:none;">
-                <p class="testimonial-quote">They understood the n8n side and the strategy side at the same time, which is rare. The workflow they shipped handles the things a person used to babysit — and it's more reliable than the person was.</p>
-                <div class="testimonial-author">Operations Lead</div>
-                <div class="testimonial-role">Residential property management firm</div>
-            </div>
-            <div class="testimonial-dots">
-                <button class="active" data-index="0"></button>
-                <button data-index="1"></button>
-                <button data-index="2"></button>
+            <div class="case reveal">
+                <div class="case-tag">Construction Services</div>
+                <div class="case-metric">100<small>%</small></div>
+                <div class="case-desc">Every after-hours inbound now becomes a tracked, dispatched lead — voice agent + SMS routing replaced a missed-call problem.</div>
+                <div class="case-footer">6-week engagement · Twilio + ElevenLabs + Vapi</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- VIDEO BG 3: Helicopter Helipad -->
-<section class="video-bg-section" id="approach">
-    <div class="video-bg-layer">
-        <video autoplay muted loop playsinline><source src="helicopter-helipad.mp4" type="video/mp4"></video>
-    </div>
-    <div class="video-bg-overlay" style="background: rgba(11,17,32,0.6);"></div>
-    <div class="video-bg-content">
-        <div class="video-bg-label gs-hidden">Our Approach</div>
-        <h2 class="video-bg-title gs-hidden">Built on data.<br>Driven by <em>results.</em></h2>
-        <p class="video-bg-desc gs-hidden">We don't guess. Every strategy is grounded in concrete data, tailored to your specific market, and optimized continuously.</p>
-        <div class="video-bg-tagline gs-hidden">Precision at Every Altitude.</div>
+<!-- ═══ TESTIMONIAL ═══ -->
+<section class="quote-section">
+    <div class="container reveal">
+        <div class="quote-mark">"</div>
+        <blockquote class="quote">They didn't just ship an automation — they shipped an operating system for the whole back office.</blockquote>
+        <div class="quote-by"><strong>Founder</strong> &middot; Multi-state Property Management Firm</div>
     </div>
 </section>
 
-<!-- APPROACH STEPS -->
-<section class="approach">
-    <div class="section-inner">
-        <div class="section-label gs-hidden">The Process</div>
-        <h2 class="section-title gs-hidden" data-split-reveal>Three steps to your growth engine</h2>
-        <div class="approach-steps" style="margin-top: 60px; max-width: 800px;">
-            <div class="approach-step gs-hidden"><div class="step-num">01</div><div class="step-content"><h4>Discovery & Audit</h4><p>We map your current pipeline, identify gaps, and build a data-backed strategy specific to your industry and ICP.</p></div></div>
-            <div class="approach-step gs-hidden"><div class="step-num">02</div><div class="step-content"><h4>System Architecture</h4><p>We design and deploy integrated AI systems — outreach, web presence, conversational agents — engineered to work in concert.</p></div></div>
-            <div class="approach-step gs-hidden"><div class="step-num">03</div><div class="step-content"><h4>Launch & Optimize</h4><p>Systems go live with real-time monitoring. We refine targeting, messaging, and conversion paths based on actual performance data.</p></div></div>
+<!-- ═══ CTA ═══ -->
+<section class="cta" id="contact">
+    <div class="cta-mesh"></div>
+    <div class="cta-inner reveal">
+        <div class="eyebrow" style="justify-content:center;">Discovery calls open</div>
+        <h2>Tell us what's <em>manual</em>.<br>We'll show you what's <em>automatable</em>.</h2>
+        <p>A 30-minute discovery call. We audit one workflow, score the ROI, and you leave with a written plan — whether we end up building it or not.</p>
+        <div class="cta-ctas">
+            <a href="mailto:nick@heightconsultingfirm.com?subject=Discovery%20call" class="btn btn-primary"><span>Book a discovery call</span><span class="arrow"></span></a>
+            <a href="mailto:nick@heightconsultingfirm.com" class="btn btn-ghost"><span>nick@heightconsultingfirm.com</span></a>
         </div>
     </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- CTA with Animated Gradient -->
-<section id="contact" class="cta-section">
-    <div class="cta-gradient-bg">
-        <div class="cta-orb cta-orb-1"></div>
-        <div class="cta-orb cta-orb-2"></div>
-        <div class="cta-orb cta-orb-3"></div>
-        <div class="cta-mesh"></div>
-    </div>
-    <div class="cta-bg-overlay" style="background:rgba(11,17,32,0.55);"></div>
-    <div class="section-inner">
-        <div class="section-label gs-hidden">Ready to Scale</div>
-        <h2 class="section-title gs-hidden" style="max-width:600px;margin:0 auto 24px;" data-split-reveal>Let's build your growth engine</h2>
-        <p class="section-desc gs-hidden" style="max-width:500px;margin:0 auto 48px;">Most clients see meaningful engagement within two weeks and measurable ROI within 2-3 months. Book a strategy call to see if we're the right fit.</p>
-        <a href="mailto:nick@heightconsultingfirm.com" class="btn-primary magnetic-btn gs-hidden" style="display:inline-block;">Book a Strategy Call</a>
-    </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-    <div class="footer-inner">
-        <div class="footer-col gs-hidden"><div class="footer-brand">Height <span>Consulting</span></div><p class="footer-desc">AI-powered B2B solutions that connect your business with decision-makers who matter. Founded in 2024.</p></div>
-        <div class="footer-col gs-hidden"><div class="footer-heading">Solutions</div><ul class="footer-links"><li><a href="#services">Workflow Automation</a></li><li><a href="#services">LinkedIn Outreach</a></li><li><a href="#services">AI Chatbots</a></li><li><a href="#services">Intelligent Phone Systems</a></li><li><a href="#how-we-build">Premium Websites</a></li></ul></div>
-        <div class="footer-col gs-hidden"><div class="footer-heading">Company</div><ul class="footer-links"><li><a href="#approach">Approach</a></li><li><a href="#results">Results</a></li><li><a href="#contact">Contact</a></li></ul></div>
-        <div class="footer-col gs-hidden"><div class="footer-heading">Connect</div><ul class="footer-links"><li><a href="mailto:nick@heightconsultingfirm.com">nick@heightconsultingfirm.com</a></li></ul></div>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <div class="footer-mark">Height <em>Consulting</em></div>
+            <p class="footer-desc">AI automation systems for high-velocity B2B teams. Founded 2024. Remote-first. Currently accepting Q2 engagements.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Systems</h4>
+            <ul>
+                <li><a href="#capabilities">Workflow Automation</a></li>
+                <li><a href="#capabilities">Custom AI Agents</a></li>
+                <li><a href="#capabilities">CRM + Sales Stack</a></li>
+                <li><a href="#capabilities">Voice + SMS</a></li>
+                <li><a href="#capabilities">Data + Dashboards</a></li>
+                <li><a href="#capabilities">Web + Booking</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Studio</h4>
+            <ul>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#systems">Live Systems</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="mailto:nick@heightconsultingfirm.com">nick@heightconsultingfirm.com</a></li>
+                <li><a href="#contact">Book a call</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 Height Consulting. All rights reserved.</span><span>Engineered with precision.</span></div>
+    <div class="footer-bottom">
+        <span>&copy; 2026 Height Consulting. All rights reserved.</span>
+        <span>Engineered with precision.</span>
+    </div>
 </footer>
 
+<!-- ═══ SCRIPTS ═══ -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
-gsap.registerPlugin(ScrollTrigger);
+(function () {
+    'use strict';
 
-// ═══════ TEXT SPLITTING (word-aware: chars never break mid-word) ═══════
-function splitText(el) {
-    const html = el.innerHTML;
-    let result = '';
-    let inTag = false;
-    let tagBuffer = '';
-    let wordBuffer = '';
-    const flushWord = () => {
-        if (!wordBuffer) return;
-        const chars = wordBuffer.split('').map(c => `<span class="char">${c}</span>`).join('');
-        result += `<span class="word">${chars}</span>`;
-        wordBuffer = '';
-    };
-    for (let i = 0; i < html.length; i++) {
-        const c = html[i];
-        if (c === '<') {
-            flushWord();
-            inTag = true; tagBuffer = '<'; continue;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ═══ PRELOADER ═══
+    const preloader = document.getElementById('preloader');
+    const bar = document.getElementById('preloader-bar');
+    const pct = document.getElementById('preloader-pct');
+    let p = 0;
+    const tick = setInterval(() => {
+        p = Math.min(100, p + Math.random() * 14 + 6);
+        if (bar) bar.style.width = p + '%';
+        if (pct) pct.textContent = Math.floor(p) + '%';
+        if (p >= 100) {
+            clearInterval(tick);
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                    preloader.style.opacity = '0';
+                    preloader.style.transform = 'translateY(-10px)';
+                    setTimeout(() => { preloader.remove(); animateHero(); }, 700);
+                }
+            }, 200);
         }
-        if (inTag) {
-            tagBuffer += c;
-            if (c === '>') {
-                inTag = false;
-                result += tagBuffer;
-                tagBuffer = '';
-            }
-            continue;
+    }, 90);
+
+    // Animate preloader mark in
+    setTimeout(() => {
+        const mark = document.querySelector('.preloader-mark');
+        if (mark) {
+            mark.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            mark.style.opacity = '1';
+            mark.style.transform = 'translateY(0)';
         }
-        if (c === ' ') {
-            flushWord();
-            result += ' ';
-        } else {
-            wordBuffer += c;
-        }
-    }
-    flushWord();
-    el.innerHTML = result;
-    return el.querySelectorAll('.char');
-}
+    }, 60);
 
-// Split hero title
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle) splitText(heroTitle);
-
-// ═══════ PARTICLE CANVAS ═══════
-const canvas = document.getElementById('particle-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let mouse = { x: null, y: null };
-const PARTICLE_COUNT = 80;
-const CONNECT_DISTANCE = 150;
-const MOUSE_RADIUS = 200;
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.radius = Math.random() * 1.5 + 0.5;
-        this.baseAlpha = Math.random() * 0.4 + 0.1;
-        this.pulse = Math.random() * Math.PI * 2;
-    }
-    update() {
-        this.pulse += 0.01;
-        if (mouse.x !== null) {
-            const dx = this.x - mouse.x;
-            const dy = this.y - mouse.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < MOUSE_RADIUS) {
-                const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-                this.vx += (dx / dist) * force * 0.02;
-                this.vy += (dy / dist) * force * 0.02;
-            }
-        }
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vx *= 0.99;
-        this.vy *= 0.99;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
-    }
-    draw() {
-        const alpha = this.baseAlpha + Math.sin(this.pulse) * 0.1;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201, 168, 76, ${alpha})`;
-        ctx.fill();
-    }
-}
-
-for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-
-function connectParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < CONNECT_DISTANCE) {
-                const alpha = (1 - dist / CONNECT_DISTANCE) * 0.12;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.strokeStyle = `rgba(201, 168, 76, ${alpha})`;
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-            }
+    // ═══ LENIS SMOOTH SCROLL ═══
+    let lenis = null;
+    if (window.Lenis && !prefersReducedMotion) {
+        lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+        if (window.ScrollTrigger) {
+            lenis.on('scroll', ScrollTrigger.update);
         }
     }
-}
 
-// Mouse-to-particle connections (premium touch)
-function mouseConnections() {
-    if (mouse.x === null) return;
-    particles.forEach(p => {
-        const dx = p.x - mouse.x;
-        const dy = p.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < MOUSE_RADIUS * 1.5) {
-            const alpha = (1 - dist / (MOUSE_RADIUS * 1.5)) * 0.2;
-            ctx.beginPath();
-            ctx.moveTo(mouse.x, mouse.y);
-            ctx.lineTo(p.x, p.y);
-            ctx.strokeStyle = `rgba(201, 168, 76, ${alpha})`;
-            ctx.lineWidth = 0.3;
-            ctx.stroke();
+    // ═══ CURSOR ═══
+    const cursor = document.getElementById('cursor');
+    const dot = document.getElementById('cursor-dot');
+    if (cursor && dot && window.matchMedia('(pointer: fine)').matches) {
+        let mx = 0, my = 0, cx = 0, cy = 0, dx = 0, dy = 0;
+        document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; dx = e.clientX; dy = e.clientY; cursor.style.opacity = '1'; dot.style.opacity = '1'; });
+        function loop() {
+            cx += (mx - cx) * 0.16; cy += (my - cy) * 0.16;
+            cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+            dot.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+            requestAnimationFrame(loop);
         }
-    });
-}
+        loop();
+        document.querySelectorAll('a, button, .cap-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
+        });
+    }
 
-function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    connectParticles();
-    mouseConnections();
-    requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-document.querySelector('.hero').addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-document.querySelector('.hero').addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-
-// ═══════ LENIS ═══════
-const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
-
-// ═══════ PRELOADER ═══════
-const preloaderTL = gsap.timeline({ onComplete: () => { document.querySelector('.preloader').style.display = 'none'; initPage(); } });
-preloaderTL
-    .to('.preloader-logo', { opacity: 1, duration: 0.5, ease: 'power2.out' })
-    .to('.preloader-bar', { width: '100%', duration: 1.8, ease: 'power2.inOut' }, 0.2)
-    .to('.preloader-counter', { textContent: 100, duration: 1.8, snap: { textContent: 1 }, ease: 'power1.inOut',
-        onUpdate() { document.querySelector('.preloader-counter').textContent = Math.round(gsap.getProperty('.preloader-counter', 'textContent')); }
-    }, 0.2)
-    .to('.preloader', { yPercent: -100, duration: 0.8, ease: 'power3.inOut', delay: 0.2 });
-
-// ═══════ CURSOR ═══════
-const ring = document.querySelector('.cursor-ring');
-const dot = document.querySelector('.cursor-dot');
-if (!('ontouchstart' in window)) {
-    document.addEventListener('mousemove', (e) => {
-        gsap.to(ring, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.4, ease: 'power2.out' });
-        gsap.to(dot, { x: e.clientX - 2.5, y: e.clientY - 2.5, duration: 0.08 });
-    });
-    document.querySelectorAll('a, button, .service-card, .approach-step, .magnetic-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => ring.classList.add('active'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('active'));
-    });
-}
-
-// ═══════ SCROLL PROGRESS ═══════
-gsap.to('.scroll-progress', { width: '100%', ease: 'none', scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
-
-// ═══════ SCROLL-VELOCITY MARQUEE ═══════
-let marqueeSpeed = 1;
-const marqueeTween = gsap.to('.marquee-track', { xPercent: -50, duration: 25, ease: 'linear', repeat: -1 });
-lenis.on('scroll', ({ velocity }) => {
-    const v = Math.abs(velocity);
-    marqueeSpeed = 1 + v * 0.15;
-    marqueeTween.timeScale(marqueeSpeed);
-});
-
-// ═══════ MAGNETIC BUTTONS ═══════
-document.querySelectorAll('.magnetic-btn').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const r = btn.getBoundingClientRect();
-        gsap.to(btn, { x: (e.clientX - r.left - r.width/2) * 0.25, y: (e.clientY - r.top - r.height/2) * 0.25, duration: 0.3, ease: 'power2.out' });
-    });
-    btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.3)' }));
-});
-
-// ═══════ 3D CARD TILT + GLOW FOLLOW ═══════
-document.querySelectorAll('.service-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const r = card.getBoundingClientRect();
-        const px = ((e.clientX - r.left) / r.width) * 100;
-        const py = ((e.clientY - r.top) / r.height) * 100;
-        card.style.setProperty('--mouse-x', px + '%');
-        card.style.setProperty('--mouse-y', py + '%');
-        gsap.to(card, { rotateY: ((e.clientX - r.left)/r.width - 0.5)*10, rotateX: -((e.clientY - r.top)/r.height - 0.5)*10, transformPerspective: 1000, duration: 0.3, ease: 'power2.out' });
-    });
-    card.addEventListener('mouseleave', () => gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.5, ease: 'power2.out' }));
-});
-
-// ═══════ TESTIMONIAL CAROUSEL ═══════
-let currentTestimonial = 0;
-const testimonials = document.querySelectorAll('.testimonial-card');
-const testimDots = document.querySelectorAll('.testimonial-dots button');
-
-function showTestimonial(index) {
-    testimonials.forEach((t, i) => {
-        if (i === index) {
-            t.style.display = 'block';
-            gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-        } else {
-            t.style.display = 'none';
+    // ═══ NAV SCROLL STATE ═══
+    const nav = document.getElementById('nav');
+    const progressBar = document.getElementById('progress');
+    function onScroll() {
+        const y = window.scrollY;
+        if (nav) nav.classList.toggle('scrolled', y > 80);
+        if (progressBar) {
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
         }
-    });
-    testimDots.forEach((d, i) => d.classList.toggle('active', i === index));
-    currentTestimonial = index;
-}
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-testimDots.forEach(d => {
-    d.addEventListener('click', () => showTestimonial(parseInt(d.dataset.index)));
-});
-
-// Auto-rotate testimonials
-setInterval(() => {
-    showTestimonial((currentTestimonial + 1) % testimonials.length);
-}, 6000);
-
-// ═══════ HORIZONTAL SCROLL ═══════
-if (window.innerWidth > 968) {
-    const hSection = document.querySelector('.horizontal-section');
-    const hWrapper = document.querySelector('.horizontal-wrapper');
-    const hPanels = gsap.utils.toArray('.h-panel');
-    const hFill = document.querySelectorAll('.h-scroll-fill');
-
-    gsap.to(hWrapper, {
-        x: () => -(hWrapper.scrollWidth - window.innerWidth),
-        ease: 'none',
-        scrollTrigger: {
-            trigger: hSection,
-            pin: true,
-            scrub: 1,
-            end: () => '+=' + (hWrapper.scrollWidth - window.innerWidth),
-            onUpdate: (self) => {
-                hFill.forEach(f => f.style.width = (self.progress * 100) + '%');
-            }
+    // ═══ HERO ANIMATIONS ═══
+    function animateHero() {
+        if (!window.gsap) {
+            // Fallback: just show
+            document.querySelectorAll('.hero-eyebrow, .hero-sub, .hero-ctas, .hero-foot').forEach(el => el.style.opacity = '1');
+            document.querySelectorAll('.hero-title .line span').forEach(s => s.style.transform = 'translateY(0)');
+            return;
         }
-    });
+        const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+        tl.to('.hero-eyebrow', { opacity: 1, duration: 0.8 }, 0)
+          .to('.hero-title .line span', { y: 0, duration: 1.3, stagger: 0.12 }, 0.1)
+          .to('.hero-sub', { opacity: 1, y: 0, duration: 1.0 }, 0.6)
+          .to('.hero-ctas', { opacity: 1, y: 0, duration: 1.0 }, 0.75)
+          .to('.hero-foot', { opacity: 1, duration: 1.0 }, 1.0);
+    }
+    // Set hero-sub & hero-ctas initial state for the animation
+    gsap && gsap.set('.hero-sub, .hero-ctas', { y: 20 });
 
-    // Reveal elements inside h-panels as they come into view
-    hPanels.forEach((panel, i) => {
-        const els = panel.querySelectorAll('.gs-hidden');
-        gsap.fromTo(els, { opacity: 0, y: 40 }, {
-            opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: {
-                trigger: panel,
-                containerAnimation: gsap.getById ? undefined : undefined,
-                start: () => 'left 80%',
-                toggleActions: 'play none none none',
-                scroller: window
-            }
-        });
-    });
-}
-
-// ═══════ PAGE ANIMATIONS ═══════
-function initPage() {
-    gsap.to('nav', { y: 0, duration: 0.6, ease: 'power3.out', delay: 0.1 });
-
-    // Hero: char-by-char reveal
-    const heroChars = document.querySelectorAll('.hero-title .char');
-    const heroTL = gsap.timeline();
-    heroTL
-        .to('.hero-badge', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0)
-        .to(heroChars, { opacity: 1, y: 0, rotateX: 0, stagger: 0.025, duration: 0.6, ease: 'power3.out' }, 0.15)
-        .to('.hero-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.8)
-        .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 1.0)
-        .to('.hero-scroll', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.2);
-
-    // Scroll reveals for gs-hidden (not inside h-panels)
-    gsap.utils.toArray('.gs-hidden').forEach(el => {
-        if (el.closest('.horizontal-section')) return;
-        gsap.fromTo(el, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-        });
-    });
-
-    // Section title char split reveals
-    document.querySelectorAll('[data-split-reveal]').forEach(title => {
-        const chars = splitText(title);
-        gsap.fromTo(chars, { opacity: 0, y: 30 }, {
-            opacity: 1, y: 0, stagger: 0.02, duration: 0.5, ease: 'power3.out',
-            scrollTrigger: { trigger: title, start: 'top 85%' }
-        });
-    });
-
-    // Service cards clip-path + stagger
-    gsap.fromTo('.service-card', { opacity: 0, y: 60, clipPath: 'inset(20% 0 0 0)' },
-        { opacity: 1, y: 0, clipPath: 'inset(0% 0 0 0)', stagger: 0.15, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: '.services-grid', start: 'top 80%' }
-        });
-
-    // Approach steps stagger from left
-    gsap.fromTo('.approach-step', { opacity: 0, x: -40 },
-        { opacity: 1, x: 0, stagger: 0.2, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: '.approach-steps', start: 'top 80%' }
-        });
-
-    // Approach visual scale reveal
-    gsap.fromTo('.approach-visual', { scale: 0.85, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.2, ease: 'power3.out',
-            scrollTrigger: { trigger: '.approach-visual', start: 'top 85%' }
-        });
-
-    // Stats
-    const stats = gsap.utils.toArray('.stat');
-    gsap.fromTo(stats, { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: '.stats-grid', start: 'top 85%',
-                onEnter: () => setTimeout(() => stats.forEach(s => s.classList.add('revealed')), 600)
-            }
-        });
-
-    // Counters
-    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        const suffix = el.closest('.stat').querySelector('.stat-label').textContent.includes('%') ? '%' : '+';
-        gsap.to(el, { textContent: target, duration: 2.2, snap: { textContent: 1 }, ease: 'power1.inOut',
-            scrollTrigger: { trigger: el, start: 'top 85%' },
-            onUpdate() { el.textContent = Math.round(parseFloat(el.textContent)) + suffix; }
-        });
-    });
-
-    // Parallax on orbs
-    gsap.to('.hero-gradient-orbs', { yPercent: 25, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-    // Metric cards reveal with stagger
-    const metricCards = gsap.utils.toArray('.metric-card');
-    gsap.fromTo(metricCards, { opacity: 0, y: 60, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, stagger: 0.15, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: '.metrics-grid', start: 'top 80%',
-                onEnter: () => setTimeout(() => metricCards.forEach(c => c.classList.add('revealed')), 600)
-            }
-        });
-
-    // Abstract visuals float-in
-    gsap.utils.toArray('.abstract-visual').forEach(av => {
-        gsap.fromTo(av, { scale: 0.85, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 1.2, ease: 'power3.out',
-                scrollTrigger: { trigger: av, start: 'top 85%' }
+    // ═══ REVEAL ON SCROLL ═══
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('is-in');
+                    io.unobserve(e.target);
+                }
             });
-    });
-
-    // Testimonial clip reveal
-    gsap.fromTo('.testimonial-quote', { opacity: 0, clipPath: 'inset(0 0 100% 0)' },
-        { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 1.2, ease: 'power3.inOut',
-            scrollTrigger: { trigger: '.testimonials-wrapper', start: 'top 80%' }
-        });
-
-    // Footer stagger
-    gsap.fromTo('.footer-col', { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, stagger: 0.12, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: 'footer', start: 'top 90%' }
-        });
-}
-
-// ═══════ NAV SCROLL BEHAVIOR ═══════
-let lastY = 0;
-lenis.on('scroll', ({ scroll }) => {
-    const nav = document.querySelector('nav');
-    if (scroll > lastY && scroll > 100) {
-        nav.style.transform = 'translateY(-100%)';
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     } else {
-        nav.style.transform = 'translateY(0)';
-    }
-    lastY = scroll;
-});
-
-// ═══════ LIVE AUTOMATION FLOW ═══════
-(function initLiveFlow() {
-    const svg = document.querySelector('.flow-svg');
-    if (!svg) return;
-    const token = document.getElementById('flow-token');
-    const log = document.getElementById('flow-event-log');
-    const eventsEl = document.getElementById('flow-events-today');
-    const latencyEl = document.getElementById('flow-latency');
-    const pillSystems = document.getElementById('pill-systems');
-    const pillEvents = document.getElementById('pill-events');
-    const pillTime = document.getElementById('pill-time');
-    const statusPill = document.querySelector('.status-pill');
-
-    const nodePositions = {
-        webhook: { x: 80, y: 160 },
-        enrich: { x: 380, y: 160 },
-        ai: { x: 690, y: 160 },
-        slack: { x: 1080, y: 40 },
-        crm: { x: 1080, y: 160 },
-        email: { x: 1080, y: 280 }
-    };
-
-    const BRANCHES = ['slack', 'crm', 'email'];
-    const BRANCH_LABELS = {
-        slack: { pill: 'HOT LEAD', msg: 'Qualified hot lead → Slack #sales-alerts' },
-        crm: { pill: 'QUALIFIED', msg: 'Mid-tier lead → HubSpot CRM synced' },
-        email: { pill: 'NURTURE', msg: 'Low-intent → nurture sequence enrolled' }
-    };
-    const SOURCES = ['LinkedIn Ad', 'Website Form', 'Webinar Reg', 'Referral', 'Case Study DL', 'Demo Request'];
-
-    let eventsToday = 2483 + Math.floor(Math.random() * 400);
-    let lastEventSeconds = 0;
-    let flowBusy = false;
-    let pillPaused = false;
-
-    function renderEvents() { eventsEl.textContent = eventsToday.toLocaleString(); pillEvents.textContent = eventsToday.toLocaleString(); }
-    renderEvents();
-
-    function renderLatency() { latencyEl.textContent = (120 + Math.floor(Math.random() * 90)); }
-
-    // Show pill after 2s
-    setTimeout(() => statusPill.classList.add('visible'), 2000);
-
-    // Tick: update "last event" seconds
-    setInterval(() => {
-        if (pillPaused) return;
-        lastEventSeconds += 1;
-        const t = lastEventSeconds < 60 ? lastEventSeconds + 's' : Math.floor(lastEventSeconds / 60) + 'm';
-        pillTime.textContent = t;
-    }, 1000);
-
-    // Flow token animation: webhook → enrich → ai → branch
-    function runFlow() {
-        if (flowBusy) return;
-        flowBusy = true;
-        const branch = BRANCHES[Math.floor(Math.random() * BRANCHES.length)];
-        const source = SOURCES[Math.floor(Math.random() * SOURCES.length)];
-        const path = ['webhook', 'enrich', 'ai', branch];
-
-        gsap.set(token, { opacity: 0, attr: { cx: nodePositions.webhook.x, cy: nodePositions.webhook.y } });
-        gsap.to(token, { opacity: 1, duration: 0.25 });
-
-        const tl = gsap.timeline({
-            onComplete: () => {
-                gsap.to(token, { opacity: 0, duration: 0.3 });
-                flowBusy = false;
-
-                // Pulse endpoint, fire status event
-                pulseNode(branch);
-                eventsToday += 1;
-                renderEvents();
-                renderLatency();
-                lastEventSeconds = 0;
-                pillTime.textContent = '0s';
-                statusPill.classList.add('event-fire');
-                setTimeout(() => statusPill.classList.remove('event-fire'), 500);
-
-                // Log entry
-                addLogEntry(source, branch);
-            }
-        });
-
-        for (let i = 1; i < path.length; i++) {
-            const from = nodePositions[path[i - 1]];
-            const to = nodePositions[path[i]];
-            const isBranch = i === path.length - 1;
-            tl.to(token, {
-                attr: { cx: to.x, cy: to.y },
-                duration: isBranch ? 0.9 : 0.7,
-                ease: 'power1.inOut',
-                onStart: () => pulseNode(path[i - 1]),
-                onComplete: () => { if (isBranch) pulseNode(path[i]); }
-            });
-        }
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-in'));
     }
 
-    function pulseNode(name) {
-        const node = document.querySelector(`.flow-node[data-node="${name}"]`);
-        if (!node) return;
-        node.classList.add('pulse');
-        setTimeout(() => node.classList.remove('pulse'), 650);
-    }
-
-    function addLogEntry(source, branch) {
-        const time = new Date().toLocaleTimeString([], { hour12: false });
-        const label = BRANCH_LABELS[branch];
-        const row = document.createElement('div');
-        row.className = 'flow-event-row';
-        row.innerHTML = `
-            <span class="flow-event-time">${time}</span>
-            <span class="flow-event-msg">${source} → ${label.msg}</span>
-            <span class="flow-event-status">✓ ${label.pill}</span>
-        `;
-        log.insertBefore(row, log.firstChild);
-        // Keep max 5 visible
-        while (log.children.length > 5) log.removeChild(log.lastChild);
-    }
-
-    // Kick off once section is visible
-    let started = false;
-    const flowSection = document.querySelector('.flow-section');
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !started) {
-                started = true;
-                // Seed a couple of log entries so it doesn't start empty
-                addLogEntry('Demo Request', 'crm');
-                addLogEntry('Referral', 'slack');
-                setTimeout(runFlow, 400);
-                // Re-trigger every 3.5-5.5s
-                setInterval(() => runFlow(), 4500 + Math.random() * 1500);
-            }
-        });
-    }, { threshold: 0.2 });
-    io.observe(flowSection);
-})();
-
-// ═══════ 3D TILT ON BUILD-STEP CARDS ═══════
-(function init3DTilt() {
-    const cards = document.querySelectorAll('.build-step');
-    if (!cards.length) return;
-    cards.forEach(card => {
-        card.style.transformStyle = 'preserve-3d';
-        card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s';
-
+    // ═══ CAPABILITY CARD MOUSE FOLLOW ═══
+    document.querySelectorAll('.cap-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            card.style.transition = 'transform 0.12s linear, border-color 0.4s, box-shadow 0.4s';
-            card.style.transform = `perspective(1100px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-6px) scale(1.01)`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transition = 'transform 0.6s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s';
-            card.style.transform = '';
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+            card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
         });
     });
+
+    // ═══ PARTICLE FIELD ═══
+    (function () {
+        const canvas = document.getElementById('particle-canvas');
+        if (!canvas || prefersReducedMotion) return;
+        const ctx = canvas.getContext('2d');
+        let w, h, particles;
+        function resize() {
+            w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+            h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+            ctx.scale(devicePixelRatio, devicePixelRatio);
+            const count = Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 18000);
+            particles = Array.from({ length: count }, () => ({
+                x: Math.random() * canvas.offsetWidth,
+                y: Math.random() * canvas.offsetHeight,
+                vx: (Math.random() - 0.5) * 0.25,
+                vy: (Math.random() - 0.5) * 0.25,
+                r: Math.random() * 1.4 + 0.4,
+                a: Math.random() * 0.4 + 0.15
+            }));
+        }
+        function frame() {
+            ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+            // Links
+            for (let i = 0; i < particles.length; i++) {
+                const p1 = particles[i];
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p1.x - p2.x, dy = p1.y - p2.y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d < 120) {
+                        ctx.strokeStyle = `rgba(201, 162, 71, ${0.12 * (1 - d / 120)})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                    }
+                }
+            }
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.offsetWidth) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.offsetHeight) p.vy *= -1;
+                ctx.fillStyle = `rgba(201, 162, 71, ${p.a})`;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+            });
+            requestAnimationFrame(frame);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+        frame();
+    })();
+
+    // ═══ LIVE FLOW ANIMATION ═══
+    (function () {
+        const nodes = document.querySelectorAll('.flow-node');
+        const lines = document.querySelectorAll('.flow-line');
+        if (!nodes.length) return;
+        let step = 0;
+        const order = [1, 2, 3, 4, 5, 6];
+        function tick() {
+            // Clear all
+            nodes.forEach(n => n.classList.remove('is-active'));
+            lines.forEach(l => l.classList.remove('is-on'));
+            // Mark prior steps as done
+            for (let i = 0; i < step; i++) {
+                const idx = order[i];
+                const n = document.querySelector(`.flow-node[data-step="${idx}"]`);
+                if (n) { n.classList.remove('is-active'); n.classList.add('is-done'); }
+                const l = document.querySelector(`.flow-line[data-line="${idx}"]`);
+                if (l) l.classList.add('is-on');
+            }
+            // Activate current
+            const current = order[step];
+            const cn = document.querySelector(`.flow-node[data-step="${current}"]`);
+            if (cn) cn.classList.add('is-active');
+
+            step = (step + 1) % (order.length + 2); // pause at end
+            if (step === order.length) {
+                // After last, clear "done" before next cycle for re-animation effect
+                setTimeout(() => {
+                    nodes.forEach(n => n.classList.remove('is-done', 'is-active'));
+                    lines.forEach(l => l.classList.remove('is-on'));
+                }, 1400);
+            }
+            if (step >= order.length + 1) step = 0;
+        }
+        tick();
+        setInterval(tick, 1100);
+    })();
+
+    // ═══ BUTTONS / LINKS HOVER MICRO-INTERACTIONS ═══
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            const id = a.getAttribute('href');
+            if (id === '#' || id.length < 2) return;
+            const target = document.querySelector(id);
+            if (target) {
+                e.preventDefault();
+                if (lenis) {
+                    lenis.scrollTo(target, { offset: -20, duration: 1.4 });
+                } else {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+
+    // ═══ CURRENT YEAR ═══
+    document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 })();
 </script>
 </body>
