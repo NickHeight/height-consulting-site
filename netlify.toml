@@ -6,8 +6,8 @@
 # (hc-ryad-analytics, refreshed twice a day) so data updates never redeploy this site.
 [[redirects]]
   from = "/ryad-report-daily"
-  to = "/ryad-report-daily/"
-  status = 301
+  to = "https://hc-ryad-analytics.netlify.app/"
+  status = 200
   force = true
 
 [[redirects]]
