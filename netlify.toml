@@ -1,3 +1,17 @@
 [build]
   publish = "."
   command = ""
+
+# Ryad Report Daily analytics dashboard. Served from its own Netlify site
+# (hc-ryad-analytics, refreshed twice a day) so data updates never redeploy this site.
+[[redirects]]
+  from = "/ryad-report-daily"
+  to = "/ryad-report-daily/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ryad-report-daily/*"
+  to = "https://hc-ryad-analytics.netlify.app/:splat"
+  status = 200
+  force = true
