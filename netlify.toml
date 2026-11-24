@@ -2,6 +2,20 @@
   publish = "."
   command = ""
 
+# The workspace (the nexus at /workspace/, outreach review under it). Served by the hc-ryad-analytics
+# Netlify site from its /workspace/ folder, the same way as the dashboard below.
+[[redirects]]
+  from = "/workspace"
+  to = "https://hc-ryad-analytics.netlify.app/workspace/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/workspace/*"
+  to = "https://hc-ryad-analytics.netlify.app/workspace/:splat"
+  status = 200
+  force = true
+
 # Ryad Report Daily analytics dashboard. Served from its own Netlify site
 # (hc-ryad-analytics, refreshed twice a day) so data updates never redeploy this site.
 [[redirects]]
